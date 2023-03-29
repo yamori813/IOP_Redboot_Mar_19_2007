@@ -359,7 +359,7 @@ fis_update_directory(int autolock, int error)
     if ((stat = flash_erase(fis_addr, blk_size, (void **)&err_addr)) != 0) {
         diag_printf("Error erasing FIS directory at %p: %s\n", err_addr, flash_errmsg(stat));
     } else {
-        if ((stat = FLASH_PROGRAM(fis_addr, fis_work_block,
+        if ((stat = flash_program(fis_addr, fis_work_block,
                                   blk_size, (void **)&err_addr)) != 0) {
             diag_printf("Error writing FIS directory at %p: %s\n", 
                         err_addr, flash_errmsg(stat));
@@ -1124,7 +1124,7 @@ fis_create(int argc, char *argv[])
         }
         if (prog_ok) {
             // Now program it
-            if ((stat = FLASH_PROGRAM((void *)flash_addr, (void *)mem_addr, img_size, (void **)&err_addr)) != 0) {
+            if ((stat = flash_program((void *)flash_addr, (void *)mem_addr, img_size, (void **)&err_addr)) != 0) {
                 diag_printf("Can't program region at %p: %s\n", err_addr, flash_errmsg(stat));
                 prog_ok = false;
             }
@@ -1394,7 +1394,7 @@ fis_write(int argc, char *argv[])
     }
     if (prog_ok) {
         // Now program it
-        if ((stat = FLASH_PROGRAM((void *)flash_addr, (void *)mem_addr, length, (void **)&err_addr)) != 0) {
+        if ((stat = flash_program((void *)flash_addr, (void *)mem_addr, length, (void **)&err_addr)) != 0) {
             diag_printf("Can't program region at %p: %s\n", err_addr, flash_errmsg(stat));
             prog_ok = false;
         }
