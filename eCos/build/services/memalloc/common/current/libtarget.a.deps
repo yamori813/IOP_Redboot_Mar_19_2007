@@ -1,0 +1,138 @@
+src/dlmalloc.o.d:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/dlmalloc.cxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/infra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_ass.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmalloc.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmallocimpl.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/common.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/heaps.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/isoinfra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/libc_string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.inl
+src/memfixed.o.d:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/memfixed.cxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_ass.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/infra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_trac.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/memfixed.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/mfiximpl.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/common.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/mfiximpl.inl \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_arch.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm_xscale_ixp425.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm_xscale_ixdp425.h
+src/memvar.o.d:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/memvar.cxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_ass.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/infra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_trac.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/memvar.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/mvarimpl.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/common.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/mvarimpl.inl
+src/sepmeta.o.d:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/sepmeta.cxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_ass.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/infra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_trac.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/sepmeta.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/sepmetaimpl.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/common.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/sepmetaimpl.inl \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/isoinfra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/libc_string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.inl \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/diag.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stdarg.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stdarg.h
+src/debug.o.d:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/debug.c \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_trac.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/infra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_ass.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/isoinfra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/libc_string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.inl \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stdlib.h
+src/malloc.o.d:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/malloc.cxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_trac.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/infra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_ass.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/isoinfra.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/libc_string.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/libc/string/string.inl \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stdlib.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/heaps.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmalloc.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmallocimpl.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/common.hxx
+heaps.o.d: heaps.cxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/heaps.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmalloc.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/stddef.h \
+  /usr/home/hiroki/xscale/toolchain/lib/gcc-lib/arm-linux/3.2.1/include/stddef.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/infra/cyg_type.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/basetype.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmallocimpl.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/common.hxx \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/mlt_arm_xscale_ixdp425_rom.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_intr.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm_xscale_ixp425.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm_xscale_ixdp425.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_plf_ints.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_var_ints.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_ixp425.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_xscale.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/hal_arm_xscale_core.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/hal/hal_hotdebug.h

@@ -1,0 +1,5 @@
+heapgeninc.tcl:  \
+ /home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/packages/services/memalloc/common/current/src/heapgen.cpp \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/system.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/pkgconf/memalloc.h \
+  /usr/home/hiroki/xscale/IOP_Redboot_Mar_19_2007/eCos/build/install/include/cyg/memalloc/dlmalloc.hxx
