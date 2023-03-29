@@ -1,0 +1,914 @@
+package CYGPKG_HAL {
+        alias		{ "eCos common HAL" hal hal_common }
+	directory	hal/common
+	script		hal.cdl
+	description "
+The eCos HAL package provide a porting layer for higher-level parts of
+the system such as the kernel and the C library. Each installation
+should have HAL packages for one or more architectures, and for each
+architecture there may be one or more supported platforms. It is
+necessary to select one target architecture and one platform for that
+architecture. There are also a number of configuration options that
+are common to all HAL packages."
+}
+
+package CYGPKG_INFRA {
+	alias 		{ Infrastructure infra }
+	directory	infra
+	script		infra.cdl
+        description "
+Common types and useful macros.
+Tracing and assertion facilities.
+Package startup options."
+}
+
+package CYGPKG_IO {
+	alias 		{ "I/O sub-system" io }
+	directory	io/common
+	script		io.cdl
+        description "
+           The eCos system is supplied with a number of different
+           device drivers.  This package contains the basic I/O system
+           support which is the basis for all drivers."
+}
+
+package CYGPKG_IO_SERIAL {
+	alias 		{ "Serial device drivers" serial io_serial }
+	directory	io/serial
+	script		io_serial.cdl
+        description "
+           This package contains drivers for basic I/O services on
+           serial devices."
+}
+
+package CYGPKG_IO_FLASH {
+	alias 		{ "Generic FLASH memory support" flash }
+	directory	io/flash
+	script		io_flash.cdl
+        description "
+           This package contains generic support for FLASH memory."
+}
+
+package CYGPKG_DEVS_FLASH_STRATA {
+	alias 		{ "Generic FLASH memory support for Intel StrataFLASH" strata }
+	directory	devs/flash/intel/strata
+	script		flash_strata.cdl
+	hardware
+        description "
+           This package contains generic hardware support for Intel
+	   StrataFLASH memory devices."
+}
+
+package CYGPKG_DEVS_FLASH_ARM_XSCALE_IQ80310 {
+	alias 		{ "FLASH memory support for Cyclone IQ80310" flash_iq80310 }
+	directory	devs/flash/arm/iq80310
+	script		flash_iq80310.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the Cyclone IQ80310 platform."
+}
+
+package CYGPKG_DEVS_FLASH_IQ80321 {
+	alias 		{ "FLASH memory support for IQ80321" flash_iq80321 }
+	directory	devs/flash/arm/iq80321
+	script		flash_iq80321.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the IQ80321 platform."
+}
+
+package CYGPKG_DEVS_FLASH_IQ31244 {
+	alias 		{ "FLASH memory support for IQ31244" flash_iq31244 }
+	directory	devs/flash/arm/iq31244
+	script		flash_iq31244.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the IQ31244 platform."
+}
+
+package CYGPKG_DEVS_FLASH_EP80219 {
+	alias 		{ "FLASH memory support for EP80219" flash_ep80219 }
+	directory	devs/flash/arm/ep80219
+	script		flash_ep80219.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the EP80219 platform."
+}
+
+package CYGPKG_DEVS_FLASH_IQ80315 {
+        alias           { "FLASH memory support for IQ80315" flash_iq80315 }
+        directory       devs/flash/arm/iq80315
+        script          flash_iq80315.cdl
+        hardware
+        description "
+           This package contains hardware support for FLASH memory
+           on the iq80315 platform."
+}
+
+package CYGPKG_DEVS_FLASH_IQ8033X {
+	alias 		{ "FLASH memory support for IQ80331/IQ80332 CRBs" flash_iq8033x }
+	directory	devs/flash/arm/iq8033x
+	script		flash_iq8033x.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the IQ80331 and IQ80332 CRBs."
+}
+
+package CYGPKG_DEVS_FLASH_IQ8134X {
+	alias 		{ "FLASH memory support for IQ8134xxx CRBs" flash_iq8134x }
+	directory	devs/flash/arm/iq8134x
+	script		flash_iq8134x.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the IQ8134x version CRBs."
+}
+
+package CYGPKG_DEVS_FLASH_MAINSTONE {
+	alias 		{ "FLASH memory support for MAINSTONE" flash_mainstone }
+	directory	devs/flash/arm/mainstone
+	script		flash_mainstone.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the Mainstone platform."
+}
+
+package CYGPKG_DEVS_FLASH_IXDP425 {
+	alias 		{ "FLASH memory support for IXDP425" flash_ixdp425 }
+	directory	devs/flash/arm/ixdp425
+	script		flash_ixdp425.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the IXDP425 platform."
+}
+
+package CYGPKG_DEVS_FLASH_GRG {
+	alias 		{ "FLASH memory support for GRG" flash_grg }
+	directory	devs/flash/arm/grg
+	script		flash_grg.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the Intel Generic Residential Gateway platform."
+}
+
+package CYGPKG_DEVS_FLASH_PRPMC1100 {
+	alias 		{ "FLASH memory support for PrPMC1100" flash_prpmc1100 }
+	directory	devs/flash/arm/prpmc1100
+	script		flash_prpmc1100.cdl
+	hardware
+        description "
+           This package contains hardware support for FLASH memory
+	   on the Motorola PrPMC1100 platform."
+}
+
+package CYGPKG_IO_SERIAL_ARM_XSCALE_IOP310 {
+    alias 	      { "Intel XScale IOP310 serial driver"
+                        devs_serial_arm_iop310 iop310_serial_driver }
+    hardware
+    directory	      devs/serial/arm/iop310
+    script	      ser_arm_iop310.cdl
+    description       "Intel XScale IOP310 serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_ARM_IQ80321 {
+    alias 	      { "Intel XScale IQ80321 serial driver"
+                        devs_serial_arm_iq80321 iq80321_serial_driver }
+    hardware
+    directory	      devs/serial/arm/iq80321
+    script	      ser_arm_iq80321.cdl
+    description       "Intel XScale/IQ80321 serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_ARM_IQ31244 {
+    alias 	      { "Intel XScale IQ31244 serial driver"
+                        devs_serial_arm_iq31244 iq31244_serial_driver }
+    hardware
+    directory	      devs/serial/arm/iq31244
+    script	      ser_arm_iq31244.cdl	
+    description       "Intel XScale/IQ31244 serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_ARM_EP80219 {
+    alias 	      { "Intel XScale EP80219 serial driver"
+                        devs_serial_arm_ep80219 ep80219_serial_driver }
+    hardware
+    directory	      devs/serial/arm/ep80219
+    script	      ser_arm_ep80219.cdl	
+    description       "Intel XScale/EP80219 serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_ARM_IOC80314 {
+    alias             { "Intel XScale ioc80314 serial driver"
+                        devs_serial_arm_ioc80314 IOC80314_serial_driver }
+    hardware
+    directory         devs/serial/arm/ioc80314
+    script            ser_arm_ioc80314.cdl
+    description       "Intel XScale/ioc80314 serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_ARM_IOP33X {
+    alias 	      { "Intel XScale IOP331 and IOP332 serial driver"
+                        devs_serial_arm_iop33x
+                        iop33x_serial_driver }
+    hardware
+    directory	      devs/serial/arm/iop33x
+    script	      ser_arm_iop33x.cdl
+    description       "Intel XScale/IOP331 and IOP332 serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_ARM_IOP34X {
+    alias 	      { "Intel XScale IOP34X serial driver"
+                        devs_serial_arm_iop34x
+                        iop34x_serial_driver }
+    hardware
+    directory	      devs/serial/arm/iop34x
+    script	      ser_arm_iop34x.cdl
+    description       "Intel XScale IOP34X-based serial device drivers"
+}
+
+package CYGPKG_IO_SERIAL_GENERIC_16X5X {
+    alias             { "16x5x compatible serial device drivers"
+                        devs_serial_generic_16x5x 16x5x_serial_driver }
+    hardware
+    directory	      devs/serial/generic/16x5x
+    script	      ser_generic_16x5x.cdl
+    description       "16x5x compatible serial device drivers"
+}
+
+package CYGPKG_IO_ETH_DRIVERS {
+	alias 		{ "Common ethernet support" net_drivers eth_drivers CYGPKG_NET_ETH_DRIVERS }
+	directory	io/eth
+	script		eth_drivers.cdl
+        description     "Platform independent ethernet support."
+}
+
+package CYGPKG_NS_DNS {
+	alias 		{ "DNS" dns }
+	directory	net/ns/dns
+	script		dns.cdl
+        description     "DNS client support."
+}
+
+package CYGPKG_DEVS_ETH_INTEL_I82559 {
+	alias 		{ "Intel 82559 ethernet driver"
+			   devs_eth_intel_i82559 i82559_eth_driver }
+	hardware
+	directory	devs/eth/intel/i82559
+	script		intel_i82559_eth_drivers.cdl
+        description     "Ethernet driver for Intel 82559 NIC."
+}
+
+package CYGPKG_DEVS_ETH_INTEL_NPE {
+	alias 		{ "Intel NPE ethernet driver"
+			   devs_eth_intel_npe npe_eth_driver intel_npe }
+	hardware
+	directory	devs/eth/intel/npe
+	script		intel_npe_eth_drivers.cdl
+        description     "Ethernet driver for Intel Network Processor Engine."
+}
+
+package CYGPKG_DEVS_ETH_INTEL_I82544 {
+	alias 		{ "Intel 82544 ethernet driver"
+			   devs_eth_intel_i82544 i82544_eth_driver }
+	hardware
+	directory	devs/eth/intel/i82544
+	script		intel_i82544_eth_drivers.cdl
+        description     "Ethernet driver for Intel 82544 NIC."
+}
+
+package CYGPKG_DEVS_ETH_INTEL_IOC80314 {
+        alias           { "Intel IOC80314 ethernet driver"
+                           devs_eth_intel_ioc80314 ioc80314_eth_driver }
+        hardware
+        directory       devs/eth/intel/ioc80314
+        script          intel_ioc80314_eth_drivers.cdl
+        description     "Ethernet driver for Intel IOC80314."
+}
+
+package CYGPKG_DEVS_ETH_ARM_IQ80321 {
+	alias 		{ "Intel IQ80321 with onboard 82544 ethernet driver"
+			   devs_eth_arm_iq80321 iq80321_eth_driver }
+	hardware
+	directory	devs/eth/arm/iq80321
+	script		iq80321_eth_drivers.cdl
+        description     "Ethernet driver for Intel IQ80321 with onboard 82544 NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_IQ31244 {
+	alias 		{ "Intel IQ31244 with onboard 82546 ethernet driver"
+			   devs_eth_arm_iq31244 iq31244_eth_driver }
+	hardware
+	directory	devs/eth/arm/iq31244
+	script		iq31244_eth_drivers.cdl
+        description     "Ethernet driver for Intel IQ31244 with onboard 82546 NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_XSCALE_EP80219 {
+	alias 		{ "Intel EP80219 with onboard 82559 ethernet driver"
+			   devs_eth_arm_ep80219 ep80219_eth_driver }
+	hardware
+	directory	devs/eth/arm/ep80219
+	script		ep80219_eth_drivers.cdl
+        description     "Ethernet driver for Intel EP80219 with onboard 82559 NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_XSCALE_EP80219_GBE {
+	alias 		{ "Intel EP80219 with onboard 82541 GBE driver"
+			   devs_eth_arm_ep80219_gbe ep80219_gbe_eth_driver }
+	hardware
+	directory	devs/eth/arm/ep80219
+	script		ep80219_gbe_eth_drivers.cdl
+        description     "Ethernet driver for Intel EP80219 with onboard GBE NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_IQ80315 {
+        alias           { "Intel IQ80315 with IOC80314 ethernet driver"
+                           devs_eth_arm_iq80315 iq80315_eth_driver }
+        hardware
+        directory       devs/eth/arm/iq80315
+        script          iq80315_eth_drivers.cdl
+        description     "Ethernet driver for Intel IQ80315 with IOC80314 Controller."
+}
+
+package CYGPKG_DEVS_ETH_ARM_IQ8033X {
+	alias 		{ "Intel IQ80331/IQ80332 CRB with onboard 82544 ethernet driver"
+			   devs_eth_arm_iq8033x iq8033x_eth_driver }
+	hardware
+	directory	devs/eth/arm/iq8033x
+	script		iq8033x_eth_drivers.cdl
+        description     "Ethernet driver for Intel IQ80331/IQ80332 CRB with onboard 82544 NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_IQ8134X {
+	alias 		{ "Intel IQ8134X CRB with onboard 8254x-based ethernet driver"
+			   devs_eth_arm_iq8134x iq8134x_eth_driver }
+	hardware
+	directory	devs/eth/arm/iq8134x
+	script		iq8134x_eth_drivers.cdl
+        description     "Ethernet driver for Intel IQ8134x CRB with onboard 8254x-based NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_MCM2 {
+	alias {"MC Mode2 PBI Ethernet Driver" }
+	hardware
+	directory	devs/eth/arm/iq8134x
+	script		mcm2_eth_drivers.cdl
+	description  "Ethernet driver for MC Mode 2 PBI based ethernet "
+}
+
+package CYGPKG_DEVS_ETH_ARM_XSCALE_IQ80310 {
+	alias 		{ "Intel IQ80310 with onboard 82559 ethernet driver"
+			   devs_eth_arm_iq80310 iq80310_eth_driver }
+	hardware
+	directory	devs/eth/arm/iq80310
+	script		iq80310_eth_drivers.cdl
+        description     "Ethernet driver for Intel IQ80310 with onboard 82559 NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_MAINSTONE {
+	alias 		{ "Intel XScale Mainstone SMSC LAN91C11 ethernet driver"  mainstone_eth_driver }
+	hardware
+	directory	devs/eth/arm/mainstone
+	script		arm_mainstone_eth_drivers.cdl
+        description     "SMSC Ethernet driver for Mainstone board."
+}
+
+package CYGPKG_DEVS_ETH_ARM_IXDP425_I82559 {
+	alias 		{ "IXDP425 (PCI) / Intel 82559 ethernet driver"
+			   devs_eth_arm_ixdp425_i82559 }
+	hardware
+	directory	devs/eth/arm/ixdp425/i82559
+	script		ixdp425_i82559_eth_driver.cdl
+        description     "Ethernet driver for IXDP425 with Intel 82559 PCI NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_GRG_I82559 {
+	alias 		{ "GRG / Intel 82559 ethernet driver"
+			   devs_eth_arm_grg_i82559 }
+	hardware
+	directory	devs/eth/arm/grg/i82559
+	script		grg_i82559_eth_driver.cdl
+        description     "Ethernet driver for GRG with Intel 82559 PCI NIC."
+}
+
+package CYGPKG_DEVS_ETH_ARM_PRPMC1100_NPE {
+	alias 		{ "PrPMC1100 / NPE ethernet driver"
+			   devs_eth_arm_prmc1100_npe prpmc1100_npe }
+	hardware
+	directory	devs/eth/arm/prpmc1100/npe
+	script		prpmc1100_npe_eth_driver.cdl
+        description     "Ethernet driver for PrPMC1100 builtin NPE MAC."
+}
+
+package CYGPKG_IO_PCI {
+	alias		{ "PCI configuration library" io_pci }
+	directory	io/pci
+	script		io_pci.cdl
+	hardware
+        description "
+           This package contains the PCI configuration library."
+}
+
+package CYGPKG_MEMALLOC {
+        alias           { "Dynamic memory allocation" memalloc malloc }
+        directory       services/memalloc/common
+        script          memalloc.cdl
+        description "
+This package provides memory allocator infrastructure required for
+dynamic memory allocators, including the ISO standard malloc
+interface. It also contains some sample implementations."
+}
+
+package CYGPKG_COMPRESS_ZLIB {
+        alias           { "Zlib compress/decompress" zlib_compress compress_zlib zlib }
+        directory       services/compress/zlib
+        script          compress_zlib.cdl
+        description "
+This package provides zlib compression and decompression support."
+}
+
+package CYGPKG_CRC {
+        alias           { "CRC support" crc }
+        directory       services/crc
+        script          crc.cdl
+        description "
+This package provides support for CRC functions, including the
+POSIX 1003 defined CRC algorithm."
+}
+
+package CYGPKG_ISOINFRA {
+        alias           { "ISO C and POSIX infrastructure" isoinfra }
+        directory       isoinfra
+        script          isoinfra.cdl
+        description "
+eCos supports implementations of ISO C libraries and POSIX implementations.
+This package provides infrastructure used by all such implementations."
+}
+
+package CYGPKG_LIBC {
+	alias		{ "C library" libc clib clibrary }
+	directory	language/c/libc/common
+	script		libc.cdl
+        description  "
+The packages under this package enable compatibility with the ISO C
+standard - ISO/IEC 9899:1990. This allows the user application to use
+well known standard C library functions, and in eCos starts a thread
+to invoke the user function main(). This package is a top-level placeholder
+to contain the implementations."
+}
+
+package CYGPKG_LIBC_STRING {
+	alias		{ "ISO C library string functions" libc_string }
+	directory	language/c/libc/string
+	script		string.cdl
+        description  "
+This package provides string functions specified by the ISO C standard
+- ISO/IEC 9899:1990."
+}
+
+package CYGPKG_REDBOOT {
+    alias           { "RedBoot, the Red Hat bootstrap" cygmon }
+    directory       redboot
+    script          redboot.cdl
+    description     "
+        This package creates the RedBoot \[stand-alone bootstrap & debug monitor\]
+        using eCos as the underlying board support mechanism."
+}
+
+package CYGPKG_HAL_ARM {
+	alias		{ "ARM common HAL" hal_arm arm_hal arm_arch_hal }
+	directory	hal/arm/arch
+	script		hal_arm.cdl
+	hardware
+	description "
+The ARM architecture HAL package provides generic support for this
+processor architecture. It is also necessary to select a specific
+target platform HAL package."
+}
+
+package CYGPKG_DEVS_ETH_SMSC_LAN91CXX {
+	alias 		{ "SMSC LAN91CXX ethernet driver" lan91cxx_eth_driver lan9000_eth_driver }
+	hardware
+	directory	devs/eth/smsc/lan91cxx
+	script		smsc_lan91cxx_eth_drivers.cdl
+        description     "Ethernet driver for SMSC LAN91CXX (LAN9000) controller."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_CORE {
+	alias		{ "Intel XScale Core" hal_arm_xscale_core }
+	directory	hal/arm/xscale/cores
+	script		hal_arm_xscale_core.cdl
+	hardware
+        description "
+        The XScale core HAL package provides the support needed to run eCos
+        on all Intel XScale based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IOP {
+	alias		{ "Intel XScale I/O Processor" hal_arm_xscale_iop }
+	directory	hal/arm/xscale/iop_common
+	script		hal_arm_xscale_iop.cdl
+	hardware
+        description "
+        The XScale I/O Processor HAL package provides the support needed to run eCos
+        on all Intel XScale I/O Processor based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IOP310 {
+	alias		{ "Intel IOP310 (IQ80200/IQ80310) XScale chipset" hal_arm_iop310 arm_iop310_hal }
+	directory	hal/arm/xscale/iop310
+	script		hal_arm_xscale_iop310.cdl
+	hardware
+	description "
+	The IOP310 HAL package provides the support needed to run
+	eCos on a system using the Intel XScale IOP310 (IQ80200/80310) chipset."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IQ80310 {
+	alias		{ "Intel IQ80310 (Cyclone) eval board" hal_arm_xscale_iq80310 hal_arm_xscale_cyclone }
+	directory	hal/arm/xscale/iq80310
+	script		hal_arm_xscale_iq80310.cdl
+	hardware
+	description "
+	The IQ80310 HAL package provides the support needed to run
+	eCos on an Intel Cyclone evaluation board, utilizing an Intel XScale
+        IQ80200/80310 chipset."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_VERDE {
+	alias		{ "Intel XScale 80320 I/O Processor" hal_arm_xscale_verde }
+	directory	hal/arm/xscale/verde
+	script		hal_arm_xscale_verde.cdl
+	hardware
+        description "
+        The XSCALE HAL package provides the support needed to run
+        eCos on Intel 80320 based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IOC80314 {
+        alias           { "Intel XScale 80314 I/O Companion Chip" hal_arm_xscale_verde }
+        directory       hal/arm/xscale/ioc80314
+        script          hal_arm_xscale_ioc80314.cdl
+        hardware
+        description "
+        The XSCALE HAL package provides the support needed to run
+        eCos on Intel 80314 based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IQ80321 {
+	alias		{ "Intel XScale IQ80321 eval board" hal_arm_xscale_iq80321 }
+	directory	hal/arm/xscale/iq80321
+	script		hal_arm_xscale_iq80321.cdl
+	hardware
+        description "
+        The IQ80321 HAL package provides the support needed to run
+        eCos on an Intel XScale IQ80321 evaluation board."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IQ31244 {
+	alias		{ "Intel XScale IQ31244 eval board" hal_arm_xscale_iq31244 }
+	directory	hal/arm/xscale/iq31244
+	script		hal_arm_xscale_iq31244.cdl
+	hardware
+        description "
+        The IQ31244 HAL package provides the support needed to run
+        eCos on an Intel XScale IQ31244 evaluation board."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_EP80219 {
+	alias		{ "Intel XScale EP80219 eval board" hal_arm_xscale_ep80219 }
+	directory	hal/arm/xscale/ep80219
+	script		hal_arm_xscale_ep80219.cdl
+	hardware
+        description "
+        The EP80219 HAL package provides the support needed to run
+        eCos on an Intel XScale EP80219 evaluation board."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IQ80315 {
+        alias           { "Intel XScale IQ80321 eval board" hal_arm_xscale_iq80315 }
+        directory       hal/arm/xscale/iq80315
+        script          hal_arm_xscale_iq80315.cdl
+        hardware
+        description "
+        The IQ80315 HAL package provides the support needed to run
+        eCos on an Intel XScale IQ80315 evaluation board."
+}
+
+
+package CYGPKG_HAL_ARM_XSCALE_IOP33X {
+	alias		{ "Intel XScale IOP331 and IOP332 I/O Processor"
+                          hal_arm_xscale_iop33x }
+	directory	hal/arm/xscale/iop33x
+	script		hal_arm_xscale_iop33x.cdl
+	hardware
+        description "
+        The IOP33X HAL package provides the support needed to run
+        eCos on Intel IOP331 and IOP332 based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IOP34X {
+	alias		{ "Intel XScale IOP34X-based I/O Processor"
+                          hal_arm_xscale_iop34x }
+	directory	hal/arm/xscale/iop34x
+	script		hal_arm_xscale_iop34x.cdl
+	hardware
+        description "
+        The IOP34X HAL package provides the support needed to run
+        eCos on Intel IOP34X-based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IQ8033X {
+	alias		{ "Intel XScale IQ80331/IQ80332 CRB" hal_arm_xscale_iq8033x }
+	directory	hal/arm/xscale/iq8033x
+	script		hal_arm_xscale_iq8033x.cdl
+	hardware
+        description "
+        The IQ80331/IQ80332 CRB HAL package provides the support needed to run
+        eCos on an Intel XScale IQ80331 or IQ80332 CRB."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IQ8134X {
+	alias		{ "Intel XScale IQ8134X-based CRB" hal_arm_xscale_iq8134x }
+	directory	hal/arm/xscale/iq8134x
+	script		hal_arm_xscale_iq8134x.cdl
+	hardware
+        description "
+        The IQ8134X CRB HAL package provides the support needed to run
+        eCos on an Intel XScale IQ8134X version CRB."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_BULVERDE {
+	alias		{ "Intel XScale Application Processor" hal_arm_xscale_bulverde }
+	directory	hal/arm/xscale/bulverde
+	script		hal_arm_xscale_bulverde.cdl
+	hardware
+        description "
+        The XScale Bulverde HAL package provides the support needed to run
+        eCos on Intel XScale Bulverde based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_MAINSTONE {
+	alias		{ "Intel XScale Mainstone eval board" hal_arm_xscale_mainstone }
+	directory	hal/arm/xscale/mainstone
+	script		hal_arm_xscale_mainstone.cdl
+	hardware
+        description "
+        The Mainstone HAL package provides the support needed to run
+        eCos on an Intel XScale Mainstone evaluation board."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IXP425 {
+	alias		{ "Intel XScale IXP425 Network Processor" hal_arm_xscale_ixp425 }
+	directory	hal/arm/xscale/ixp425
+	script		hal_arm_xscale_ixp425.cdl
+	hardware
+        description "
+        The XScale IXP425 HAL package provides the support needed to run
+        eCos on Intel XScale IXP425 network processor based systems."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_IXDP425 {
+	alias		{ "Intel XScale IXDP425 Network Processor eval board" hal_arm_xscale_ixdp425 }
+	directory	hal/arm/xscale/ixdp425
+	script		hal_arm_xscale_ixdp425.cdl
+	hardware
+        description "
+        The IXDP425 HAL package provides the support needed to run
+        eCos on an Intel XScale IXDP425 network processor evaluation board."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_GRG {
+	alias		{ "Intel XScale Generic Residential Gateway" hal_arm_xscale_grg }
+	directory	hal/arm/xscale/grg
+	script		hal_arm_xscale_grg.cdl
+	hardware
+        description "
+        The GRG HAL package provides the support needed to run eCos on an
+        Intel Generic Residential Gateway evaluation board."
+}
+
+package CYGPKG_HAL_ARM_XSCALE_PRPMC1100 {
+	alias		{ "Motorola PrPMC1100 PMC for Intel XScale IXC1100" hal_arm_xscale_prpmc1100 }
+	directory	hal/arm/xscale/prpmc1100
+	script		hal_arm_xscale_prpmc1100.cdl
+	hardware
+        description "
+        The PrPMC1100 HAL package provides the support needed to run eCos on an
+        Motorola PrPMC1100 evaluation board."
+}
+
+target iq80310 {
+ 	alias { "Intel IQ80310 XScale board" cyclone iq80310 }
+        packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_IOP310
+                   CYGPKG_HAL_ARM_XSCALE_IQ80310
+                   CYGPKG_IO_PCI
+                   CYGPKG_DEVS_ETH_INTEL_I82559
+                   CYGPKG_DEVS_ETH_ARM_XSCALE_IQ80310
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+                   CYGPKG_IO_SERIAL_ARM_XSCALE_IOP310
+                   CYGPKG_DEVS_FLASH_ARM_XSCALE_IQ80310
+        }
+        description "
+        The iq80310 target provides the packages needed to run
+        eCos on a Cyclone IQ80310 board."
+}
+
+target iq80321 {
+	alias { "Intel XScale IQ80321 Board" iq80321 }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_VERDE
+                   CYGPKG_HAL_ARM_XSCALE_IQ80321
+                   CYGPKG_IO_PCI
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+		   CYGPKG_IO_SERIAL_ARM_IQ80321
+                   CYGPKG_DEVS_ETH_INTEL_I82544
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_IQ80321
+                   CYGPKG_DEVS_ETH_ARM_IQ80321
+        }
+        description "
+        The IQ80321 target provides the packages needed to run
+        eCos on an Intel XScale IQ80321 board."
+}
+
+target iq31244 {
+	alias { "Intel XScale IQ31244 Board" iq31244 }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_VERDE
+                   CYGPKG_HAL_ARM_XSCALE_IQ31244
+                   CYGPKG_IO_PCI
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+		   CYGPKG_IO_SERIAL_ARM_IQ31244
+                   CYGPKG_DEVS_ETH_INTEL_I82544
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_IQ31244
+                   CYGPKG_DEVS_ETH_ARM_IQ31244
+        }
+        description "
+        The IQ31244 target provides the packages needed to run
+        eCos on an Intel XScale IQ31244 board."
+}
+
+target ep80219 {
+	alias { "Intel XScale EP80219 Board" ep80219 }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_VERDE
+                   CYGPKG_HAL_ARM_XSCALE_EP80219
+                   CYGPKG_IO_PCI
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+		   CYGPKG_IO_SERIAL_ARM_EP80219
+                   CYGPKG_DEVS_ETH_INTEL_I82559
+                   CYGPKG_DEVS_ETH_INTEL_I82544
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_EP80219
+                   CYGPKG_DEVS_ETH_ARM_XSCALE_EP80219
+                   CYGPKG_DEVS_ETH_ARM_XSCALE_EP80219_GBE
+        }
+        description "
+        The EP80219 target provides the packages needed to run
+        eCos on an Intel XScale EP80219 board."
+}
+
+target iq80315 {
+        alias { "Intel XScale IQ80315 Board" iq80315 }
+        packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_IOC80314
+                   CYGPKG_HAL_ARM_XSCALE_IQ80315
+                   CYGPKG_IO_PCI
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+                   CYGPKG_IO_SERIAL_ARM_IOC80314
+                   CYGPKG_DEVS_ETH_INTEL_IOC80314
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_IQ80315
+                   CYGPKG_DEVS_ETH_ARM_IQ80315
+        }
+        description "
+        The IQ80315 target provides the packages needed to run
+        eCos on an Intel XScale CRB IQ80315 board."
+}
+
+target iq8033x {
+	alias { "Intel XScale IQ80331/IQ80332 CRB" iq8033x }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_IOP33X
+                   CYGPKG_HAL_ARM_XSCALE_IQ8033X
+                   CYGPKG_IO_PCI
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+		   CYGPKG_IO_SERIAL_ARM_IOP33X
+                   CYGPKG_DEVS_ETH_INTEL_I82544
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_IQ8033X
+                   CYGPKG_DEVS_ETH_ARM_IQ8033X
+        }
+        description "
+        The IQ80331/IQ80332 CRB target provides the packages needed to run
+        eCos on an Intel XScale IQ80331 or IQ80332 CRB."
+}
+
+target iq8134x {
+	alias { "Intel XScale IQ8134X CRB" iq8134x }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_IOP
+                   CYGPKG_HAL_ARM_XSCALE_IOP34X
+                   CYGPKG_HAL_ARM_XSCALE_IQ8134X
+                   CYGPKG_IO_PCI
+                   CYGPKG_IO_SERIAL_GENERIC_16X5X
+                   CYGPKG_IO_SERIAL_ARM_IOP34X
+                   CYGPKG_DEVS_ETH_INTEL_I82544
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_IQ8134X
+                   CYGPKG_DEVS_ETH_ARM_IQ8134X
+        }
+        description "
+        The IQ8134X CRB target provides the packages needed to run
+        eCos on an Intel XScale IQ8134X type CRB."
+}
+
+target mainstone {
+	alias { "Intel XScale Mainstone Evaluation Board" mainstone }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+                   CYGPKG_HAL_ARM_XSCALE_BULVERDE
+                   CYGPKG_HAL_ARM_XSCALE_MAINSTONE
+                   CYGPKG_DEVS_FLASH_STRATA
+                   CYGPKG_DEVS_FLASH_MAINSTONE
+                   CYGPKG_DEVS_ETH_SMSC_LAN91CXX
+                   CYGPKG_DEVS_ETH_ARM_MAINSTONE
+        }
+        description "
+        The Mainstone target provides the packages needed to run
+        eCos on an Intel XScale Mainstone/Bulverde board."
+}
+
+target ixdp425 {
+	alias { "IXDP425 board" ixdp425 }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+	           CYGPKG_HAL_ARM_XSCALE_IXP425
+                   CYGPKG_HAL_ARM_XSCALE_IXDP425
+		   CYGPKG_IO_PCI
+                   CYGPKG_DEVS_ETH_INTEL_I82559
+		   CYGPKG_DEVS_ETH_ARM_IXDP425_I82559
+                   CYGPKG_DEVS_FLASH_STRATA
+		   CYGPKG_DEVS_FLASH_IXDP425
+        }
+        description "
+        The ixdp425 target provides the packages needed to run
+        eCos on an Intel network processor evaluation board."
+}
+
+target grg {
+	alias { "Generic Residential Gateway" grg }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+	           CYGPKG_HAL_ARM_XSCALE_IXP425
+                   CYGPKG_HAL_ARM_XSCALE_GRG
+		   CYGPKG_IO_PCI
+                   CYGPKG_DEVS_ETH_INTEL_I82559
+                   CYGPKG_DEVS_ETH_ARM_GRG_I82559
+                   CYGPKG_DEVS_FLASH_STRATA
+		   CYGPKG_DEVS_FLASH_GRG
+        }
+        description "
+        The grg target provides the packages needed to run
+        eCos on an Intel Generic Residential Gateway board."
+}
+
+target prpmc1100 {
+	alias { "Motorola PrPMC1100" prpmc1100 }
+	packages { CYGPKG_HAL_ARM
+                   CYGPKG_HAL_ARM_XSCALE_CORE
+	           CYGPKG_HAL_ARM_XSCALE_IXP425
+                   CYGPKG_HAL_ARM_XSCALE_PRPMC1100
+		   CYGPKG_IO_PCI
+                   CYGPKG_DEVS_FLASH_STRATA
+		   CYGPKG_DEVS_FLASH_PRPMC1100
+        }
+        description "
+        The prpmc1100 target provides the packages needed to run
+        eCos on a Motorola PrPMC1100."
+}
+

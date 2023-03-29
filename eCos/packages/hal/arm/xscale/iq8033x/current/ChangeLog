@@ -1,0 +1,394 @@
+2006-02-14  Curt Bruns <curt.e.bruns@intel.com>
+	* src/iq8033x_setup_atu.c: Modified the minimal_atu setup to
+        more closely follow the retry release sequence in the Jan 2006 
+        Spec update.  Also fixed a bug where the ESD Enhance clear bit
+        was not being cleared properly.
+
+	* src/hal_platform_setup.c (hal_platform_setup): Don't call the
+2005-12-20  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: No need to convert virt to phys
+	if 32-bit region size is 0.
+
+	* src/hal_platform_setup.c (hal_platform_setup): Don't call the
+	scrub loop for the 32-bit region if it is of size 0.
+
+2005-10-04  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Implement spec
+	change #19; updated default values for DLL registers
+
+2005-07-26  Glenn Leary <glennX.c.leary@intel.com>
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Fixed erratum 83: 
+	 PCI Express ESD enhancement requires a change to register setting.
+
+2005-07-21  Glenn Leary <glennX.c.leary@intel.com>
+	* src/hal_diag.c (cyg_hal_plf_serial_getc_nonblock): Removed local
+	echo of stdin characters to screen when an application is running,
+	this was causing segmentation faults to occur.
+	
+2005-02-28  Curt Bruns <curt.e.bruns@intel.com>
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Updated the JEDEC
+        initialization sequence to match the JEDEC spec released Nov. 2004. 
+	This includes EMRS(2) and EMRS(3) programming and setting OCD 
+	calibration to default.
+	* include/hal_iop33x.h : Created DCALCSR definitions to support
+	mcu initialization changes.
+
+2004-11-23  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/plf_io.h (HAL_PCI_TRANSLATE_INTERRUPT): Support the IOP333
+	ATU DeviceID as well.
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Ditto.
+	* src/diag/i82545.c (enet_setup): Ditto.
+
+2004-11-22  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/hal_diag.c: 
+	(cyg_hal_plf_serial_getc_nonblock): Enable local echo of stdin
+	characters when an application is running.
+
+2004-11-15  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iq8033x.cdl: Make HAL_PLATFORM_MACHINE_TYPE a
+	function that dynamically determines the board type.
+	* src/iq8033x_misc.c (hal_platform_machine_type): Ditto.
+
+2004-11-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* misc/redboot_RAM.ecm: Enable Hot Debug.
+	* misc/redboot_ROM.ecm: Ditto.
+	* misc/redboot_ROM_cache_sram.ecm: Ditto.
+
+2004-11-02  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Support private/opaque
+	PCI memory.
+
+	* include/plf_io.h (cygarc_cached_address): Cleanup types in support
+	of 64-bit addressing.
+	(cygarc_uncached_address): Ditto.
+	(cygarc_physical_address): Ditto.
+	(cygarc_virtual_address): Ditto.
+	(cygarc_virt_to_bus): Ditto.
+	(cygarc_bus_to_virt): Ditto.
+
+	* include/iq8033x.h (IQ8033X_ROTARY_SWITCH_DEV_HIDING): Support two
+	both device hiding and opaque memory encoded via the rotary switch.
+	(IQ8033X_ROTARY_SWITCH_PCI_PRIVMEM): Ditto.
+
+2004-10-29  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* cdl/hal_arm_xscale_iq8033x.cdl: Corrected the Machine ID.
+	
+2004-09-30  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iq8033x.cdl: Account for the 32-bit ECC region when
+	setting CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR.
+
+2004-09-28  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/iq8033x.h (SDRAM_DEVID): Change the defines for SDRAM_DEVID
+	to be preshifted.
+
+2004-09-07  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* src/diag/xscale_test.c : Removed out the battery and the LED
+	diagnostic from the Basic Sanity Test.
+
+2004-09-07  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* src/diag/pcitest.c : Reworked the PCI diagnostics to support iq80310
+	and iq80331. 
+
+2004-08-27  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Better handling of downstream
+	hidden PCI memory space.  Starting to dynamically determine the amount
+	of space to request for BAR1.
+
+2004-08-17  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Convert all PCI window
+	configuration to CDL rather than arbitrary hardcoded values.
+	* include/iq8033x.h: Ditto.
+	* cdl/hal_arm_xscale_iq8033x.cdl: Ditto.
+
+2004-08-16  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c: Use PCI config flags and determine MASTER
+	mode based on boot time setting of config-retry.
+
+	* include/hal_platform_setup.h: Save amount of SDRAM shared over PCI
+	in a global variable.  Use PCI config flags.
+
+	* src/hal_platform_setup.c (hal_platform_setup): Ditto.
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Ditto.
+
+2004-08-13  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/iq8033x.h: Removed alternate physical memory configuration.
+	* include/hal_platform_extras.h: Ditto.
+	* cdl/hal_arm_xscale_iq8033x.cdl: Ditto.
+	* misc/redboot_RAM_altmap.ecm: Ditto. Removed file.
+	* misc/redboot_ROM_altmap.ecm: Ditto. Removed file.
+
+	* cdl/hal_arm_xscale_iq8033x.cdl: Removed CDL option
+	CYGSEM_HAL_ARM_IQ8033X_IGNORE_ONBOARD_ETHERNET.
+	* src/iq8033x_misc.c: Ditto.
+	* include/plf_io.h: Ditto.
+
+2004-08-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c: Handle multiple config_flags and cleanup
+	BAR/LR initialization.
+
+	* include/plf_io.h: Move PCI I/O defines and globals from platform
+	code into variant code.
+
+2004-06-11  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/diag/pcitest.c (pci_test): Support PCI test using an
+	IQ80310, IQ80321 or IQ80331 in the secondary/B slot.
+
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Better PCI
+	initialization to avoid multiple devices being assigned the same
+	address.  Handle hidden devices more intelligently so that bridge
+	devices function properly.
+
+	* include/plf_io.h (__IQ80332_PCIX_B_SLOT_DEVNUM): Support
+	the PCIX B-segment.
+
+	* include/hal_platform_setup.h: Remember device hiding state.
+
+2004-06-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c: Support config reads and write of PCIE
+	extended configuration space.
+	Fix Errata 80: Incorrect default value for PCI Express Flow
+	Control Protocol Error Severity
+
+2004-06-09  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c: Enable the MCU Core port on D0 and above
+	Silicon.
+
+2004-06-08  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* src/diag/xscale_test.c: Added an option to the menu to allow
+	user to execute some pre-selected diagnostic tests automatically.
+
+	* src/diag/battery.c: Switches to a less verbose output if the
+	newly added option is selected from the diagnostic tool menu.
+	* src/diag/memtest.c: Ditto
+
+	* src/diag/test_menu.h: Added structures to support the new option.
+
+2004-06-01  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Disable MCU-Core
+	port per latest spec update.
+
+2004-05-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/hal_platform_setup.c: Setup SDRAM on PCI only if installed.
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Ditto.
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Ditto.
+
+	* src/iq8033x_setup_atu.c (setup_pci_config_setup): Use a utility
+	function to determine the localbus number.
+	(setup_pci_cfg_read_uint8): Ditto.
+	(setup_pci_cfg_write_uint8): Ditto.
+	(setup_pci_cfg_read_uint16): Ditto.
+	(setup_pci_cfg_write_uint16): Ditto.
+	(setup_pci_cfg_read_uint32): Ditto.
+	(setup_pci_cfg_write_uint32): Ditto.
+	(minimal_ATU_setup): Ditto.
+
+	* src/iq8033x_misc.c (iq8033x_ignore_device): Use a utility function
+	to determine the localbus number.
+	* src/diag/i82545.c (enet_setup): Ditto.
+	* include/plf_io.h (HAL_PCI_TRANSLATE_INTERRUPT): Ditto.
+
+2004-05-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_atu.c: Setup BAR0 and BAR1 to be 32-bit
+	non-prefetchable.  Setup BAR2 to be 64-bit prefetchable.
+
+2004-04-28  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/debug_platform_setup.c
+	(hal_platform_lowlevel_serial_debug_init): New baud divisors for
+	19200 and 9600.
+	* src/hal_diag.c: Ditto.
+
+2004-04-06  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_misc.c (plf_hardware_init): Change the caching policy
+	of SDRAM to read-write allocate.
+
+	* include/hal_platform_extras.h: Set the caching policy of SDRAM
+	to Read-allocate in the flash-based page table.  This will greatly
+	improve the speed of the ECC scrub loop.  Once the page tables are
+	copied to SDRAM, we will change to read-write allocate.
+
+	* src/iq8033x_setup_mcu.c: Always enable the MCU-Core port so that
+	strict ordering is preserved when reading/writing SDRAM.
+
+2004-04-02  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/iq8033x.h: Better macros for physical_to_virtual, etc.
+
+2004-03-02  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iq8033x.cdl: New CDL Configuration
+	CYG_HAL_PHYSICAL_MAP which is either NORMAL (SDRAM at physical
+	address 0) or ALTERNATE (sdram at physical address 0xC0000000).
+
+	* include/hal_platform_extras.h: Handle the ALTERNATE and NORMAL
+	physical memory maps.
+	* include/hal_platform_setup.h: Ditto.
+	* include/iq8033x.h: Ditto.
+	* misc/redboot_RAM_altmap.ecm: Ditto.
+	* misc/redboot_ROM_altmap.ecm: Ditto.
+
+2004-02-19  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c (mcu_initialization): New tRTCMD values based
+	on latest spec updates.
+
+2004-02-11  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Modify DDR RCVDLY
+	default to 0x7.
+	(mcu_initialization): Remove CDL configurability of MCU dual porting.
+	Make it run-time conditional based on the Processor Device ID.
+
+2004-02-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Conditionalize
+	based on CDL the MCU dual porting.
+	* cdl/hal_arm_xscale_iq8033x.cdl: Ditto.
+
+	* src/iq8033x_misc.c: Make sure the INTCTL1 registers are also
+	initialized.
+
+2004-01-28  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Make sure the TTB register is
+	programmed with the correct physical address.
+
+	* include/hal_platform_extras.h: Redo the memory map to allow
+	for a 32-bit ECC region remapped to high memory.
+	* include/iq8033x.h: Ditto.
+	* include/plf_io.h: Ditto.
+	* src/hal_platform_setup.c (hal_platform_setup): Ditto.
+	* src/iq8033x_setup_atu.c (minimal_ATU_setup): Ditto.
+	* src/iq8033x_setup_mcu.c (mcu_memory_scrub): Ditto.
+	
+2004-01-15  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c (mcu_initialization): Use the tRFC and
+	tRC extension byte as documented in the 2003-01-13 JEDEC spec.
+	Use the JEDEC defined tWR for calculating tWTCMD.
+	Setup single-ended operation for DDR-I.
+
+2003-12-22  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c: Reverse the order of calls to the
+	*_to_ns() and the *_to_cycles() functions/macros so that the order
+	is more correct (although I think associativity tells us the order
+	they were in is still correct).
+	(mcu_initialization): Several changes to parameter calculations
+	based on latest documentation updates.  Specifically ns_per_cycle,
+	tRP, tRCD, tRAS, tRC, tRFC, tWTRD, tRTCMD, tWTCMD.
+
+2003-12-19  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8033x_setup_mcu.c: Fix errors in handling tWTR,
+	DQS_ENABLED, and tRTCMD parameters
+
+2003-12-16  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/plf_io.h: Added support for IQ80332 Beta board
+	device ID's for the onboard GbE.
+	* src/diag/i82545.c: Ditto.  Also removed faulty diag which assumed
+	dual MACs.
+	* src/diag/xscale_test.c: Ditto.
+
+	* cdl/hal_arm_xscale_iq8033x.cdl: Added CDL option to ignore the
+	onboard ethernet.
+	* src/iq8033x_misc.c: Ditto.
+
+2003-11-25  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Lock two ICache lines at address
+	0 to be safe.
+
+	* src/diag/xscale_test.c: Added enhanced memory diagnostic w/ pattern
+	tests, cached vs. uncached tests and repetition.
+	* src/diag/memtest.c: Ditto.
+
+2003-11-21  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Make sure to lock one cache line
+	into the I-Cache when using CYGSEM_HAL_ARM_XSCALE_USE_CACHE_AS_SRAM
+	so that the exception fetches (which use the I-cache) will succeed.
+
+2003-11-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/diag/xscale_test.c (random_write_memory_tests): New diag
+	to write random values to memory for further stress-testing.
+	* src/diag/memtest.c (RandData32): Ditto.
+	(LED_DIAG_PROGRESS): Added flashing LED heartbeat.
+
+	* include/iq8033x.h: Added debug code for system initialization
+	and debugged init after recoding in C.
+	* include/plf_io.h: Ditto.
+	* include/hal_platform_setup.h: Ditto.
+	* include/hal_platform_extras.h: Ditto.
+	* cdl/hal_arm_xscale_iq8033x.cdl: Ditto.
+	* src/iq8033x_setup_mcu.c: Ditto.
+	* src/iq8033x_setup_atu.c: Ditto.
+	* src/hal_platform_setup.c: Ditto.
+	* src/hal_diag.c: Ditto.
+	* src/debug_platform_setup.c: 
+
+2003-07-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* Initial IQ80331/IQ80332 CRB Platform Port
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

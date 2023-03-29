@@ -1,0 +1,1147 @@
+<!-- Copyright (C) 2005 Red Hat, Inc.                                -->
+<!-- This material may be distributed only subject to the terms      -->
+<!-- and conditions set forth in the Open Publication License, v1.0  -->
+<!-- or later (the latest version is presently available at          -->
+<!-- http://www.opencontent.org/openpub/).                           -->
+<!-- Distribution of the work or derivative of the work in any       -->
+<!-- standard (paper) book form is prohibited unless prior           -->
+<!-- permission is obtained from the copyright holder.               -->
+<HTML
+><HEAD
+><TITLE
+>ARM/XScale Intel IQ80332</TITLE
+><meta name="MSSmartTagsPreventParsing" content="TRUE">
+<META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="RedBoot User's Guide"
+HREF="redboot-guide.html"><LINK
+REL="UP"
+TITLE="Installation and Testing"
+HREF="installation-and-testing.html"><LINK
+REL="PREVIOUS"
+TITLE="Installation and Testing"
+HREF="installation-and-testing.html"><LINK
+REL="NEXT"
+TITLE="ARM/XScale Intel IQ80315"
+HREF="iq80315.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>RedBoot User's Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="installation-and-testing.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Installation and Testing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="iq80315.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="IQ80332"
+></A
+>ARM/XScale Intel IQ80332</H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3217"
+></A
+>Overview</H2
+><P
+>RedBoot supports
+the serial port and the built-in ethernet port for communication and downloads.
+The default serial port settings are 115200,8,N,1. RedBoot also supports flash
+management for the onboard 8MB flash.</P
+><P
+>The following RedBoot configurations are supported:
+
+      <DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3227"
+></A
+><P
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><THEAD
+><TR
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Configuration</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Mode</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Description</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>File</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>ROM</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>[ROM]</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>RedBoot running from the board's flash boot
+	      sector.</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>redboot_ROM.ecm</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>RAM</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>[RAM]</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>RedBoot running from RAM with RedBoot in the
+	      flash boot sector.</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>redboot_RAM.ecm</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3246"
+></A
+>Initial Installation Method</H2
+><P
+>The initial flash programming must be done through the JTAG port. See board manufacturers documentation for more information on programming flash through JTAG. RedBoot should be programmed to flash offset 0x00000000 using the JTAG flash utility.</P
+><P
+>Two sets of prebuilt files are provided in a tarball. Each set corresponds to one of the supported configurations and includes an ELF file (.elf), a binary image (.bin), and an S-record file (.srec).
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>For RedBoot running from the flash boot sector:
+bin/redboot_ROM.bin
+bin/redboot_ROM.elf
+bin/redboot_ROM.srec
+
+For RedBoot running from RAM with RedBoot in the flash boot sector:
+bin/redboot_RAM.bin
+bin/redboot_RAM.elf
+bin/redboot_RAM.srec</PRE
+></TD
+></TR
+></TABLE
+>
+Initial installations use the flash-based RedBoots. Installation and use of RAM based RedBoots is documented elsewhere.</P
+><P
+>After booting the initial installation of RedBoot, this warning may
+be printed: <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>flash configuration checksum error or invalid key</PRE
+></TD
+></TR
+></TABLE
+>This is normal, and indicates that the flash must be configured
+for use by RedBoot. Even if the above message is not printed, it may be a
+good idea to reinitialize the flash anyway. Do this with the <B
+CLASS="COMMAND"
+>fis</B
+> command: <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>RedBoot&#62; <TT
+CLASS="USERINPUT"
+><B
+>fis init</B
+></TT
+>
+About to initialize [format] FLASH image system - continue (y/n)? <TT
+CLASS="USERINPUT"
+><B
+>y</B
+></TT
+>
+*** Initialize FLASH Image System
+    Warning: device contents not erased, some blocks may not be usable
+    ... Unlock from 0xf07e0000-0xf0800000: .
+    ... Erase from 0xf07e0000-0xf0800000: .
+    ... Program from 0x01ddf000-0x01ddf400 at 0xf07e0000: .
+    ... Lock from 0xf07e0000-0xf0800000: .</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3257"
+></A
+>Switch Settings</H2
+><P
+>The 80332 board is highly configurable through a number of switches and jumpers.
+RedBoot makes some assumptions about board configuration and attention must be paid
+to these assumptions for reliable RedBoot operation:
+<P
+></P
+><UL
+><LI
+><P
+>The onboard ethernet and the secondary slot may be placed in a
+private space so that they are not seen by a PC BIOS. If the board is to be used
+in a PC with BIOS, then the ethernet should be placed in this private space so that
+RedBoot and the BIOS do not conflict.</P
+></LI
+><LI
+><P
+>RedBoot assumes that the board is plugged into a PC with BIOS. This
+requires RedBoot to detect when the BIOS has configured the PCI-X secondary bus. If
+the board is placed in a backplane, RedBoot will never see the BIOS configure the
+secondary bus. To prevent this wait, set switch S7A1-3 to ON when using the board
+in a backplane.</P
+></LI
+><LI
+><P
+>For the remaining switch settings, the following is a known good
+configuration:
+<DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3267"
+></A
+><P
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S7A1</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>1,4,5,6 are closed, rest are open</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>J1C1</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>1-2</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>J1D2</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Open</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>J7B4</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>1-2, 3-4</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>J7D1</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Open</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>J9D3</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Open</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></P
+></LI
+></UL
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3288"
+></A
+>LED Codes</H2
+><P
+>RedBoot uses the two digit LED display to indicate status during   board
+initialization. Possible codes are:</P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>LED     Actions
+-------------------------------------------------------------
+  	Power-On/Reset
+0,1: 	PBI Initialization Complete
+
+0,2: 	ICache Enabled
+
+0,3: 	Flash remapped to high address
+
+0,4: 	MMU enabled
+
+0,5: 	Begin platform specific initialization
+
+0,6: 	MCU initialization
+
+0,7: 	Timeout resetting SPD EEPROM read pointer
+
+0,8: 	Timeout reading SPD EEPROM contents
+
+0,9: 	Checksum error in SPD EEPROM
+
+0,A: 	Unknown SDRAM Type (SPD byte #2)
+
+0,B: 	Unsupported number of SDRAM rows (SPD byte #3)
+
+0,C: 	Unsupported number of SDRAM columns (SPD byte #4)
+
+0,D: 	Unsupported number of SDRAM banks (SPD byte #5)
+
+0,E: 	Unsupported SDRAM module width (SPD byte #6)
+
+0,F: 	Unsupported SDRAM module width (SPD byte #7)
+
+1,0: 	Unsupported SDRAM Config (SPD byte #11)
+
+1,1: 	Unsupported DDR SDRAM Refresh rate (SPD byte #12)
+
+1,2: 	Unsupported DDR-II SDRAM Refresh rate (SPD byte #12)
+
+1,3: 	Unsupported SDRAM width (SPD byte #13)
+
+1,4: 	Unsupported DDR SDRAM tCAS setting (SPD byte #18)
+
+1,5: 	Unsupported DDR-II SDRAM tCAS setting (SPD byte #18)
+
+1,6: 	Unsupported DDR Memory Module Attributes (SPD byte #21)
+
+1,7:	Unsupported tRP value (SPD byte #27)
+
+1,8: 	Unsupported tRCD value (SPD byte #29)
+
+1,9: 	Unsupported tRAS value (SPD byte #30)
+
+1,A: 	Unsupported DDR bank sizes (SPD byte #31)
+
+1,B: 	Unsupported DDR-II bank sizes (SPD byte #31)
+
+1,C: 	Unsupported tRC value (SPD byte #41)
+
+1,D: 	Unsupported tRFC value (SPD bytes #40 and #42)
+
+1,E: 	Error initializing bank registers
+
+1,F: 	Error initializing bank register address translation bits
+
+2,0: 	MCU Register initialization complete
+
+2,1: 	MCU BIU Dual-porting enabled
+
+2,2: 	SDRAM JEDEC initialization complete
+
+2,3: 	MCU Initialization complete
+
+2,4: 	Setup ATU
+
+2,5: 	ATU BAR's, LR's initialized for host BIOS configuration
+
+2,6: 	Dobson Bridge A Device Hiding Enabled
+
+2,7: 	ATU Config Retry released
+
+2,8: 	Dobson Bridge B Config Retry released
+
+2,9: 	Dobson Bridge A Config Retry released
+
+2,A: 	ATU/Bridge Initializaton for host BIOS configuration complete
+
+2,B: 	End of C hal_platform_setup routine
+
+2,C: 	Cache unlocked, cleared and disabled 
+
+2,D: 	Cache locked as SRAM at address 0
+
+2,E: 	ICache, DCache, BTB, MMU initialized
+
+2,F: 	Start of loop to move page tables to RAM
+
+3,0: 	End of loop to move page tables to RAM
+
+3,1: 	RAM-based page tables active
+
+A,D: 	End of platform_setup1 macro
+
+A,7: 	Switch to IRQ mode
+
+A,6: 	Move SWI &#38; Undefined "vectors" to RAM (at 0x0)
+
+A,5: 	Switch to supervisor mode
+
+A,4: 	Move remaining "vectors" to RAM (at 0x0)
+
+A,3: 	Copy DATA to RAM,
+     	Initialize interrupt exception environment
+     	Initialize stack
+     	Clear BSS section
+
+A,2: 	Platform specific hardware initialization
+     	Initialize debug stub
+
+A,1: 	Run through static constructors
+     	Start up the eCos kernel or RedBoot
+
+S,L: 	MCU Memory Scrub Loop start
+
+S,E: 	MCU Memory Scrub Loop end</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3292"
+></A
+>Special RedBoot Commands</H2
+><P
+>A special RedBoot command, <B
+CLASS="COMMAND"
+>diag</B
+>, is used to
+access a set of hardware diagnostics. To access the diagnostic menu,
+enter <B
+CLASS="COMMAND"
+>diag</B
+> at the RedBoot prompt:
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>RedBoot&#62; <TT
+CLASS="USERINPUT"
+><B
+>diag</B
+></TT
+>
+Entering Hardware Diagnostics - Disabling Data Cache!
+
+  iq80331/iq80332 CRB Hardware Tests
+
+ 1 - Memory Tests
+ 2 - Random-write Memory Tests
+ 3 - Repeating Memory Tests
+ 4 - Repeat-On-Fail Memory Test
+ 5 - Enhanced Memory Tests
+ 6 - Rotary Switch S1 Test
+ 7 - 7 Segment LED Tests
+ 8 - i82545 Ethernet Configuration
+ 9 - Battery Status Test
+10 - Battery Backup SDRAM Memory Test
+11 - Timer Test
+12 - PCI Bus test
+13 - CPU Cache Loop (No return)
+14 - Execute Selected Tests
+ 0 - quit
+Enter the menu item number (0 to quit):&#13;</PRE
+></TD
+></TR
+></TABLE
+>
+Tests for various hardware subsystems are provided, and some tests require
+special hardware in order to execute normally. The Ethernet Configuration
+item may be used to set the board ethernet address.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3299"
+></A
+>Memory Tests</H3
+><P
+>This test is used to test installed DDR SDRAM memory. Five different
+tests are run over the given address ranges. If errors are encountered, the
+test is aborted and information about the failure is printed. When selected,
+the user will be prompted to enter the base address of the test range and its
+size. The numbers must be in hex with no leading &#8220;0x&#8221;</P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>Enter the menu item number (0 to quit): <TT
+CLASS="USERINPUT"
+><B
+>1</B
+></TT
+>
+
+Base address of memory to test (in hex): <TT
+CLASS="USERINPUT"
+><B
+>100000</B
+></TT
+>
+
+Size of memory to test (in hex): <TT
+CLASS="USERINPUT"
+><B
+>200000</B
+></TT
+>
+
+Testing memory from 0x00100000 to 0x002fffff.
+
+Walking 1's test: 
+0000000100000002000000040000000800000010000000200000004000000080
+0000010000000200000004000000080000001000000020000000400000008000
+0001000000020000000400000008000000100000002000000040000000800000
+0100000002000000040000000800000010000000200000004000000080000000
+passed
+32-bit address test: passed
+32-bit address bar test: passed
+8-bit address test: passed
+Byte address bar test: passed
+Memory test done.</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3306"
+></A
+>Random-write Memory Tests</H3
+><P
+>The random test writes pseudo-random values to memory looking for
+ECC failures.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3309"
+></A
+>Repeating Memory Tests</H3
+><P
+>The repeating memory tests are exactly the same as the above memory tests,
+except that the tests are automatically rerun after completion. The only way out
+of this test is to reset the board.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3312"
+></A
+>Enhanced Memory Tests</H3
+><P
+>The enhanced memory test performs more intensive memory testing. It requires the
+user to specify the number of iterations the test will execute till.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3315"
+></A
+>Repeat-On-Fail Memory Tests</H3
+><P
+>This is similar to the repeating memory tests except that when an error
+is found, the failing test continuously retries on the failing address.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3318"
+></A
+>Rotary Switch S1 Test</H3
+><P
+>This tests the operation of the sixteen position rotary switch. When run,
+this test will display the current position of the rotary switch on the LED
+display. Slowly dial through each position and confirm reading on LED.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3321"
+></A
+>7 Segment LED Tests</H3
+><P
+>This tests the operation of the seven segment displays. When run, each
+LED cycles through 0 through F and a decimal point.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3324"
+></A
+>i82544 Ethernet Configuration</H3
+><P
+>This test initializes the ethernet controller&#8217;s serial EEPROM if
+the current contents are invalid. In any case, this test will also allow the
+user to enter a six byte ethernet MAC address into the serial EEPROM.</P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>Enter the menu item number (0 to quit): <TT
+CLASS="USERINPUT"
+><B
+>6</B
+></TT
+>
+
+
+Current MAC address: 00:80:4d:46:00:02
+Enter desired MAC address: <TT
+CLASS="USERINPUT"
+><B
+>00:80:4d:46:00:01</B
+></TT
+>
+Writing to the Serial EEPROM... Done
+
+******** Reset The Board To Have Changes Take Effect ********</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3330"
+></A
+>Battery Status Test</H3
+><P
+>This tests the current status of the battery. First, the test checks to
+see if the battery is installed and reports that finding. If the battery is
+installed, the test further determines whether the battery status is one or
+more of the following:
+<P
+></P
+><UL
+><LI
+><P
+>Battery is charging.</P
+></LI
+><LI
+><P
+>Battery is fully discharged.</P
+></LI
+><LI
+><P
+>Battery voltage measures within normal operating range.</P
+></LI
+></UL
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3340"
+></A
+>Battery Backup SDRAM Memory Test</H3
+><P
+>This tests the battery backup of SDRAM memory. This test is a three
+step process:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Select Battery backup test from main diag menu, then write
+data to SDRAM.</P
+></LI
+><LI
+><P
+>Turn off power for 60 seconds, then repower the board.</P
+></LI
+><LI
+><P
+>Select Battery backup test from main diag menu, then check
+data that was written in step 1.</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3350"
+></A
+>Timer Test</H3
+><P
+>This tests the internal timer by printing a number of dots at one
+second intervals.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3353"
+></A
+>PCI Bus Test</H3
+><P
+>This tests the secondary PCI-X bus and socket. This test requires that
+an IQ803xx board be plugged into the secondary slot of the IQ80332 board.
+The test assumes at least 32MB of installed memory on the IQ803xx. That memory
+is mapped into the IQ80332 address space and the memory tests are run on that
+memory.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3356"
+></A
+>CPU Cache Loop</H3
+><P
+>This test puts the CPU into a tight loop run entirely from the ICache.
+This should prevent all external bus accesses.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3359"
+></A
+>Execute Selected Tests</H3
+><P
+>This executes the timer test and the memory test automatically. It requires no
+user intervention.</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3362"
+></A
+>Rebuilding RedBoot</H2
+><P
+>These shell variables provide the platform-specific information
+needed for building RedBoot according to the procedure described in
+<A
+HREF="rebuilding-redboot.html"
+>Chapter 3</A
+>:
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>export TARGET=iq80332
+export ARCH_DIR=arm
+export PLATFORM_DIR=xscale/iq80332</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>The names of configuration files are listed above with the
+description of the associated modes.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3368"
+></A
+>Interrupts</H2
+><P
+>RedBoot uses an interrupt vector table which is located at address 0x8004.
+Entries in this table are pointers to functions with this protoype::      <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int irq_handler( unsigned vector, unsigned data )</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>On an IQ80332 board, the vector argument is one of 64 interrupts defined in <TT
+CLASS="COMPUTEROUTPUT"
+>hal/arm/xscale/iop33x/current/include/hal_var_ints.h:</TT
+>:   <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define CYGNUM_HAL_INTERRUPT_NONE         	-1
+#define CYGNUM_HAL_INTERRUPT_DMA0_EOT      	0
+#define CYGNUM_HAL_INTERRUPT_DMA0_EOC      	1
+#define CYGNUM_HAL_INTERRUPT_DMA1_EOT      	2
+#define CYGNUM_HAL_INTERRUPT_DMA1_EOC      	3
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_4      	4
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_5      	5
+#define CYGNUM_HAL_INTERRUPT_AA_EOT        	6
+#define CYGNUM_HAL_INTERRUPT_AA_EOC       	7
+#define CYGNUM_HAL_INTERRUPT_TIMER0        	8
+#define CYGNUM_HAL_INTERRUPT_TIMER1        	9
+#define CYGNUM_HAL_INTERRUPT_I2C_0         	10
+#define CYGNUM_HAL_INTERRUPT_I2C_1         	11
+#define CYGNUM_HAL_INTERRUPT_MU            	12
+#define CYGNUM_HAL_INTERRUPT_MU_IN_POST_Q  	13
+#define CYGNUM_HAL_INTERRUPT_ATU_BIST      	14
+#define CYGNUM_HAL_INTERRUPT_PERFMON       	15
+#define CYGNUM_HAL_INTERRUPT_CORE_PMU      	16
+#define CYGNUM_HAL_INTERRUPT_WDT           	17
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_18     	18
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_19     	19
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_20     	20
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_21     	21
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_22     	22
+#define CYGNUM_HAL_INTERRUPT_RSVD_0_23     	23
+#define CYGNUM_HAL_INTERRUPT_XINT0         	24
+#define CYGNUM_HAL_INTERRUPT_XINT1         	25
+#define CYGNUM_HAL_INTERRUPT_XINT2         	26
+#define CYGNUM_HAL_INTERRUPT_XINT3         	27
+#define CYGNUM_HAL_INTERRUPT_XINT4         	28
+#define CYGNUM_HAL_INTERRUPT_XINT5         	29
+#define CYGNUM_HAL_INTERRUPT_XINT6         	30
+#define CYGNUM_HAL_INTERRUPT_XINT7         	31
+#define CYGNUM_HAL_INTERRUPT_XINT8        	32
+#define CYGNUM_HAL_INTERRUPT_XINT9        	33
+#define CYGNUM_HAL_INTERRUPT_XINT10       	34
+#define CYGNUM_HAL_INTERRUPT_XINT11       	35
+#define CYGNUM_HAL_INTERRUPT_XINT12       	36
+#define CYGNUM_HAL_INTERRUPT_XINT13       	37
+#define CYGNUM_HAL_INTERRUPT_XINT14       	38
+#define CYGNUM_HAL_INTERRUPT_XINT15       	39
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_8     	40
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_9     	41
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_10    	42
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_11    	43
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_12    	44
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_13    	45
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_14    	46
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_15    	47
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_16    	48
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_17    	49
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_18    	50
+#define CYGNUM_HAL_INTERRUPT_UART0        	51
+#define CYGNUM_HAL_INTERRUPT_UART1        	52
+#define CYGNUM_HAL_INTERRUPT_PBUS_UNIT    	53
+#define CYGNUM_HAL_INTERRUPT_ATUCR_WRITE  	54
+#define CYGNUM_HAL_INTERRUPT_ATU_ERR      	55
+#define CYGNUM_HAL_INTERRUPT_MCU_ERR      	56
+#define CYGNUM_HAL_INTERRUPT_DMA0_ERR     	57
+#define CYGNUM_HAL_INTERRUPT_DMA1_ERR     	58
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_27   	59
+#define CYGNUM_HAL_INTERRUPT_AA_ERR       	60
+#define CYGNUM_HAL_INTERRUPT_RSVD_1_29    	61
+#define CYGNUM_HAL_INTERRUPT_MU_ERR       	62
+#define CYGNUM_HAL_INTERRUPT_HPI          	63</PRE
+></TD
+></TR
+></TABLE
+>
+The data passed to the ISR is pulled from a data table <TT
+CLASS="COMPUTEROUTPUT"
+>(hal_interrupt_data)</TT
+> which immediately follows the interrupt vector table. </P
+><P
+>An application may create a normal C function with the above prototype
+to be an ISR. Just poke its address into the table at the correct index and
+enable the interrupt at its source. The return value of the ISR is ignored
+by RedBoot.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3377"
+></A
+>Memory Maps</H2
+><P
+>The RAM based page table is located at RAM start + 0x4000. </P
+><P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#13;Physical Address Range     Description
+-----------------------    ----------------------------------
+0x00000000 - 0x7fffffff		SDRAM - 64 bit ECC
+0x80000000 - 0x87ffffff		ATU Outbound Memory Translation Windows
+0x90000000 - 0x900fffff		ATU Outbound I/O Translation Window
+0xa0000000 - 0xbfffffff		SDRAM - 64 bit ECC Uncached
+0xc0000000 - 0xc07fffff		Flash (PCE0#)
+0xce800000 - 0xce8fffff		PCE1# - Uncached
+0x0f000000 - 0x0f0fffff		Cache Flush
+0xfff00000 - 0xffffffff		80332 I/O Processer Memory Mapped Registers.
+
+Default Virtual Map      Description
+-----------------------  ----------------------------------
+0x00000000 - 0x7fffffff		SDRAM - 64 bit ECC
+0x80000000 - 0x87ffffff		ATU Outbound Memory Translation Windows
+0x90000000 - 0x900fffff		ATU Outbound I/O Translation Window
+0xa0000000 - 0xbfffffff		SDRAM - 64 bit ECC Uncached
+0xc0000000 - 0xc07fffff		Flash (PCE0#)
+0xce800000 - 0xce8fffff		PCE1# - Uncached
+0x0f000000 - 0x0f0fffff		Cache Flush
+0xfff00000 - 0xffffffff		80332 I/O Processer Memory Mapped Registers.
+&#13;</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3382"
+></A
+>Platform Resource Usage</H2
+><P
+>The IQ80332 programmable timer0 is used for timeout support
+for networking and XModem file transfers.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="installation-and-testing.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="redboot-guide.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="iq80315.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Installation and Testing</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="installation-and-testing.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>ARM/XScale Intel IQ80315</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

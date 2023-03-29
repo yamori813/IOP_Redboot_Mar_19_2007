@@ -1,0 +1,67 @@
+2006-01-21  Curt Bruns <curt.e.bruns@intel.com>
+	* src/iop34x_pci.c: Modified the PCI scan to correctly
+          assign IO space and setup the Outbound IO Translate value
+          correctly.  Also modifed the PCIe scan to work correctly
+          with bridge devices.
+
+2005-10-10  Curt Bruns <curt.e.bruns@intel.com>
+	* src/iop34x_pci.c: Modified the PCI scan to correctly
+          scan the PCIe bus.  A PCIe device will respond to every
+          device# for a config read.  Therefore, the IGNORE routine
+          was expanded to not allow the PCIe bus to be scanned
+          for more than one device number
+
+2005-08-26  Curt Bruns <curt.e.bruns@intel.com>
+	* src/iop34x_pci.c: Modifed the PCI routine to only look
+	at the TPMI block if the processor is not an 81342.
+
+2005-08-16  Curt Bruns <curt.e.bruns@intel.com>
+	* src/iop34x_misc.c: Added function disable_l1_caches()
+	to disable DCache and ICache after board has been
+	bootstrapped if the semaphore : 
+	CYGSEM_HAL_ARM_IQ8134x_DISABLE_L1 is defined.
+
+2005-03-07  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop34x.cdl: Remove PROCESSOR_CCLK
+	configuration points.
+
+2004-11-30  Curt E Bruns  <curt.e.bruns@intel.com>
+
+	* Initial port to the Intel IOP34X I/O Processors
+	* Sources ported directly from IOP33X I/O Processor tree
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2004, 2001, 2002, 2003 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

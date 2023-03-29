@@ -1,0 +1,293 @@
+2006-02-14  Curt Bruns <curt.e.bruns@intel.com>
+
+	* include/hal_iop33x.h: Modified PCIE_ESD_ENHANCE_CLEAR_OFFSET and
+          added definitions to enhance device hiding and the ability to pass
+          ATU retries upstream through the bridge.
+
+2005-10-04  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h: Implement spec change #19; updated default
+	values for DLL registers
+
+2005-07-26  Glenn Leary <glennX.c.leary@intel.com>
+	* include/hal_iop33x.h: Added PCIE_ESD_ENHANCE_SET_OFFSET, 
+	PCIE_ESD_ENHANCE_SET, PCIE_ESD_ENHANCE_CLEAR_OFFSET,
+	PCIE_ESD_ENHANCE_CLEAR definitions to support fix to
+	Erratum 83: PCI Express ESD enhancment requires a change to
+	register setting.
+
+2005-03-18  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Delay 40 seconds before
+	assuming no Host BIOS configuration;  some PCIE platforms take longer
+	than 20 seconds to configure the slots.
+
+2005-03-07  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c (hal_clock_initialize): Make CLOCK_MULTIPLIER
+	dynamic based on the processor stepping level.
+
+	* cdl/hal_arm_xscale_iop33x.cdl: Remove PROCESSOR_CCLK
+	configuration points.
+
+2004-12-14  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c (hal_platform_linux_exec_capable): Change
+	linux exec check to ensure that all of SDRAM is shared over
+	BAR2 rather than Opaque.
+
+2004-12-08  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Allow for no RAM sharing
+	via PCI.
+
+2004-11-18  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* include/hal_iop33x.h: Check if opaque memory is enabled or not
+	before booting the kernel. 
+	* src/iop33x_misc.c: Added function to check if opaque memory is
+	enabled or not.
+
+2004-11-02  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/var_io.h: Support 64-bit addressing for PCI devices.
+	* src/iop33x_pci.c: Ditto.  Also support Opaque/Private PCI memory.
+
+	* include/hal_iop33x.h (PCIE_BINIT_PCI_PRIVMEM_ENABLE): Support
+	private/opaque memory.
+	(PCSR_PRIVMEM_ENABLE): Ditto.
+	(IOP33X_PCI_PRIVMEM): Ditto.
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Move PCI alignment function
+	to PCI code.
+
+2004-11-01  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* src/iop33x_pci.c: Support Opaque/Private PCI memory.
+
+2004-10-26  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h (ATU_PX_SR_BUS_NUM_MASK): When we are the
+	PCI host, ensure that we use bus number 0 as our local bus.
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Ditto.
+	Handle non-64MB aligned outbound windows.
+
+2004-09-29  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c (_scrub_ecc): Don't use i-cache locking; just
+	allow PBI arbitration instead.
+
+2004-09-23  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c: Move I2C API implementation to IOP common code.
+	(hal_platform_i2c_bus_reset_preamble): Implement IOP33x/IQ8033x board
+	I2C bus reset.
+	(_scrub_ecc): Don't overwrite reserved bits in the IACR.
+	(_scrub_ecc): Call mcr for drain operation rather than mrc.
+
+	* include/hal_iop33x.h: Ditto.
+	* include/var_io.h: Ditto.
+
+2004-09-22  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h (IACR_RSV_MASK): Don't change the reserved bits.
+
+	* src/iop33x_misc.c: Don't change reserved bits in the IACR.
+
+2004-08-27  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Better handling of downstream
+	hidden PCI memory space.  Starting to dynamically determine the amount
+	of space to request for BAR1.
+
+2004-08-17  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* src/iop33x_pci.c: Added 'cyg_hal_plf_ignore_devices' which tells the
+	PCI initialization routines on the host not to configure the private
+	devices on the slave.
+	Setup the code to call the 'configure_bus' function to configure the
+	primary local bus and all downstream busses and devices.
+
+2004-08-17  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c: Convert all PCI window configuration to CDL
+	rather than arbitrary hardcoded values.
+	* cdl/hal_arm_xscale_iop33x.cdl: Ditto.
+
+2004-08-16  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h (ATU_IALR_SIZE): New macro to convert a limit
+	register to the size of that window.
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Use the PCI config
+	flags.  Specifically IOP33X_PCI_MASTER.
+
+	* include/hal_iop33x.h (IOP33X_PCI_MASTER): New PCI config flag
+	for master vs. slave mode.
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Use hal_dram_pci_size
+	for dynamic configuration of inbound PCI window.
+
+2004-08-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c (cyg_hal_plf_pci_init): Use new ALLOCATION_BASE
+	CDL values.
+	(cyg_hal_plf_pci_init): Use inline CYGARC_HAL_BOUNDARY_ALIGN function.
+	(cyg_hal_plf_pci_init): Share a CDL-specified amount of SDRAM
+	instead of all.
+
+	* include/var_io.h: Move PCI I/O defines and globals from platform
+	code into variant code.
+
+	* include/hal_iop33x.h: New defines for bridge-hidden devices.
+	New defines for PCI memory window addresses.
+
+2004-06-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c: Support config reads and write of PCIE
+	extended configuration space.
+
+	* include/hal_iop33x.h: Added PCI Express Uncorrectable
+	Error Severity register definition.
+
+2004-06-09  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h: Added C0, C1 and D0 device IDs.
+
+2004-06-03  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c: Reset devices on the I2C bus with the
+	C0 reset scheme.
+
+	* include/hal_iop33x.h: Access GPIO registers as 32-bit.
+
+2004-06-02  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop33x.cdl: Support platform-specific memory
+	configuration information printing.
+	* src/iop33x_misc.c (hal_platform_memory_info): Ditto.
+
+2004-05-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h (iop33x_localbus_number): Utility
+	function for determining the localbus number.
+
+2004-05-07  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h: SHPC macros.
+
+2004-05-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_pci.c: Just mask in the Base Address and
+	leave the configuration bits alone.  Better base address mapping
+	to ensure that no two devices have the same PCI address.
+	
+2004-02-20  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c (i2c_reset): Devices on the I2C bus
+	may be left in a hung state if a reset happens during an I2C
+	transaction.  Without a power cycle, the device will never release
+	the bus.  Force the devices to release the bus.
+
+	* include/hal_iop33x.h: Added register defines for the UARTs.
+
+2004-02-11  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop33x.cdl: Remove CDL
+	configurability of MCU dual porting.  Make it run-time conditional
+	based on the Processor Device ID.
+
+2004-02-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h: Added device ID codes.
+
+2004-02-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h: Adjust RFR values based on recent spec
+	update.
+
+2004-01-28  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c (mcu_ISR): Convert the ECC address register
+	toa virtual address before trying to clean.
+
+2004-01-15  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_iop33x.h: Use the JEDEC defined tWR for calculating
+	tWTCMD.
+
+2003-11-25  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c: Fix error in I-Cache locking code so that
+	the proper number of ICache lines get locked.
+
+2003-11-21  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c: Remove RAMTEXT section and just use
+	I-Cache locking instead.
+
+2003-11-19  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop33x.cdl: Set CDL variables to
+	require control of RedBoot commands for PCI Config/Memory/IO read
+	and write cycles as well as ECC failures.
+
+2003-11-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iop33x_misc.c (_scrub_ecc): Move _scrub_ecc()
+	function into RAM since we disable the PBI arbitration and
+	cannot run from flash.
+	Provide I2C API.
+
+	* src/iop33x_pci.c (pci_config_setup): Handle PCI
+	config transaction properly based on PCI mode.
+	(cyg_hal_plf_pci_minimal_initialization): Make sure the ATU is at
+	least enabled when building the MINIMAL_REDBOOT configuration.
+
+	* include/hal_iop33x.h: Handle dual serial ports.
+
+	* cdl/hal_arm_xscale_iop33x.cdl: Require I2C API.
+	Make system ECC configuration dynamic via CDL.
+
+	* include/var_io.h: Make sure the ATU is at least enabled when
+	building the MINIMAL_REDBOOT configuration.
+	(i2c_write_bytes): Implement I2C API.
+
+2003-07-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* Initial port to the Intel IOP331 and IOP332 I/O Processors
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2004, 2001, 2002, 2003 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

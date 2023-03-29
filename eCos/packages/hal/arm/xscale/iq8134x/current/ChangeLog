@@ -1,0 +1,83 @@
+2006-03-15  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8134x_setup_atu.c (minimal_ATU_setup): Set new PCIe defaults for
+	B0 silicon.
+
+2006-01-21  Curt E Bruns <cut.e.bruns@intel.com>
+
+	* src/iq8134x_setup_atu.c: If MMRs are going to be shared on the PCIe
+          leg, they get shared via IO space now.  
+
+2005-12-06  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/iq8134x_setup_mcu.c (mcu_initialization): Don't use __FUNCTION__
+	variable before RAM is initialized.
+	(mcu_memory_scrub): Ditto.
+	* src/iq8134x_setup_atu.c (minimal_ATU_setup): Ditto.
+	* src/hal_platform_setup.c (hal_platform_setup): Ditto.
+
+2005-10-10  Curt E Bruns  <curt.e.bruns@intel.com>
+
+        * src/diag/memtest.c: Added NVRAM test to do 8/16 bit reads/writes
+          to NVRAM.  
+        * src/diag/pcitest.c: Added scan to PCIe leg if we are RC device
+	* src/iq8134x_setup_mcu.c: Updated DLLRCVER values from design.
+        * src/diag/cftest.c: Added for IQ8134xMC         
+	* src/iq8134x_cf.c: Added for IQ8134xMC 
+	* include/hal_platform_setup.h: Modifed to allow ROMRAM version to 
+          be built at a 0x0 offset in Flash.
+
+2005-09-16  Curt E Bruns  <curt.e.bruns@intel.com>
+
+        * Gold release of RedBoot for IQ8134x (SL version)
+        * L1 and L2 Cache enabled
+        * Onboard GigE and PCI-X Slot scanned.  GigE Configured and used
+	* [ROM] version: Rotary Switch can be used to select which 
+          core to boot on.  If (Switch & 0x1) == 0 : Boot on Core0, else
+          boot on Core1.
+	* [ROM] version: Uses either UART port - whichever one detects a
+          character first.
+	* [ROMRAM] version: Boots with Transport FW.  Needs to be burned
+          at 2M offset in Flash and Transport FW must be burned at 0.
+	* [ROMRAM] version: Uses UART1 only (the UART connector furthest
+          from the GigE connector).
+
+2004-11-30  Curt E Bruns  <curt.e.bruns@intel.com>
+
+	* Initial IQ8134X CRB Platform Port
+	* Sources all based off of IQ80331/IQ80332 Tree
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2005 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

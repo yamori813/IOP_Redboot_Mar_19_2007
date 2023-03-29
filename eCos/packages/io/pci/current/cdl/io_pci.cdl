@@ -1,0 +1,168 @@
+# ====================================================================
+#
+#      io_pci.cdl
+#
+#      eCos PCI library configuration data
+#
+# ====================================================================
+#####ECOSGPLCOPYRIGHTBEGIN####
+## -------------------------------------------
+## This file is part of eCos, the Embedded Configurable Operating System.
+## Copyright (C) 1998, 1999, 2000, 2001, 2002 Red Hat, Inc.
+##
+## eCos is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free
+## Software Foundation; either version 2 or (at your option) any later version.
+##
+## eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+## WARRANTY; without even the implied warranty of MERCHANTABILITY or
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+## for more details.
+##
+## You should have received a copy of the GNU General Public License along
+## with eCos; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+##
+## As a special exception, if other files instantiate templates or use macros
+## or inline functions from this file, or you compile this file and link it
+## with other works to produce a work based on this file, this file does not
+## by itself cause the resulting work to be covered by the GNU General Public
+## License. However the source code for this file must still be made available
+## in accordance with section (3) of the GNU General Public License.
+##
+## This exception does not invalidate any other reasons why a work based on
+## this file might be covered by the GNU General Public License.
+##
+## Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+## at http://sources.redhat.com/ecos/ecos-license/
+## -------------------------------------------
+#####ECOSGPLCOPYRIGHTEND####
+# ====================================================================
+######DESCRIPTIONBEGIN####
+#
+# Author(s):      jskov
+# Contributors:	dmoseley
+# Date:           1999-08-12
+#
+# Copyright:    (C) 2003-2004 Intel Corporation.
+#####DESCRIPTIONEND####
+#
+# ====================================================================
+
+cdl_package CYGPKG_IO_PCI {
+    display       "PCI configuration library"
+    doc           ref/io-pci.html
+    include_dir   cyg/io
+    parent        CYGPKG_IO
+    description   "
+           The PCI configuration library provides initialization of devices
+           on the PCI bus. Functions to find and access these devices are
+	   also provided."
+
+    compile       pci.c pci_hw.c
+
+    cdl_component CYGPKG_IO_PCI_OPTIONS {
+        display "PCI build options"
+        flavor  none
+        description   "
+	    Package specific build options including control over
+	    compiler flags used only in building this package,
+	    and details of which tests are built."
+
+
+        cdl_option CYGPKG_IO_PCI_CFLAGS_ADD {
+            display "Additional compiler flags"
+            flavor  data
+            no_define
+            default_value { "" }
+            description   "
+                This option modifies the set of compiler flags for
+                building the PCI configuration library. These flags are used in addition
+                to the set of global flags."
+        }
+
+        cdl_option CYGPKG_IO_PCI_CFLAGS_REMOVE {
+            display "Suppressed compiler flags"
+            flavor  data
+            no_define
+            default_value { "" }
+            description   "
+                This option modifies the set of compiler flags for
+                building the PCI configuration library. These flags are removed from
+                the set of global flags if present."
+        }
+
+        cdl_option CYGPKG_IO_PCI_DEBUG {
+            display "Enable debugging."
+            flavor  bool
+            default_value 0
+            description   "
+                This option enables minimal debugging of the PCI library.
+                In particular, it will print information about devices as the
+                PCI bus is being scanned/searched."
+        }
+
+        cdl_option CYGPKG_IO_PCI_TESTS {
+            display "PCI tests"
+            flavor  data
+            no_define
+            calculated { "tests/pci1 tests/pci2" }
+            description   "
+                This option specifies the set of tests for the PCI configuration library."
+        }
+    }
+
+    cdl_option CYGPKG_IO_PCI_MEMORY_ALLOCATION_BASE {
+        display       "PCI Memory address to use for allocations."
+        flavor        data
+        default_value 0
+        description   "
+            This option determines the address to be used by the PCI subsystem when
+            allocating PCI memory space to devices."
+    }
+
+    cdl_option CYGPKG_IO_PCI_IO_ALLOCATION_BASE {
+        display       "PCI IO address to use for allocations."
+        flavor        data
+        default_value 0x90000000
+        description   "
+            This option determines the address to be used by the PCI subsystem when
+            allocating PCI IO space to devices.  This is essentially arbitrary
+            however we want to avoid using 0 as there are known devices which
+            fail with an I/O address of 0"
+    }
+
+    cdl_option CYG_PCI_MAX_BUS {
+    	display		"Maximum bus number that can be used."
+	flavor		data
+	default_value	8
+	description	"
+	    This option determines the maximum bus number that can be used."
+    }
+
+    cdl_option CYG_PCI_MAX_DEV {
+   	display		"Maximum device number that is allowed on a PCI bus."
+	flavor		data
+	default_value	8
+	description	"
+	    This option determines the maximum device number that is allowed on a single bus."
+    }
+
+
+    cdl_option CYG_PCI_MIN_DEV {
+    	display		"Minimum device number that is allowed on a PCI Bus."
+	flavor		data
+	default_value	0
+	description	"
+	    This option determines the minimum device number that is allowed on a PCI Bus."
+    }
+
+    cdl_option CYG_PCI_MAX_FN {
+    	display		"Maximum function number allowed for a single bus."
+	flavor		data
+	default_value	8
+	description	"
+	    This option determines the maximum function number that is allowed for a single bus."
+    }
+
+}

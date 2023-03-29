@@ -1,0 +1,173 @@
+2005-09-07  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/diag/i82546.c: Added support for the 82546GB.
+
+2005-08-08  Glenn Leary  <glennX.c.leary@intel.com>
+
+	* src/hal_diag.c (cyg_hal_plf_serial_getc_nonblock): Removed local echo
+	of stdin characters when an application is running. Has been
+	implemented in packages/redboot/current/src/hal_diag.c
+
+2005-06-13  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Implement PCI Config
+	flags on 321/219 family
+
+2004-11-22  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/hal_diag.c (cyg_hal_plf_serial_getc_nonblock): Enable local echo of stdin
+	characters when an application is running.
+
+2004-11-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* misc/redboot_RAM.ecm: Enable Hot Debug.
+	* misc/redboot_ROM.ecm: Ditto.
+
+2004-09-30  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_extras.h: Setup the uncached region as
+	bufferable for scrub loop performance.  The caching policy will be
+	changed to noncached/nonbufferable once the page tables have
+	copied to RAM.
+	* src/iq31244_misc.c (plf_hardware_init): Ditto.
+
+2004-09-29  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Use proper offsets for I2C registers.
+
+2004-09-27  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iq31244.cdl: Force the VERDE_IOP_FLAVOR to be
+	IOP321.
+
+2004-09-24  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/diag/i2c.c: Use I2C definitions provided by the IOP_COMMON
+	package.
+	* include/hal_platform_setup.h: Ditto.
+
+2003-07-10  Mark Salter  <msalter@redhat.com>
+
+	* src/diag/dmatest.c: New file.
+	* src/diag/xscale_test.c: Add dma test.
+
+	* src/diag/i82546.c (pci_ether_test): Add diag_wait before returning.
+	* src/diag/lm75.c (lm75_test): Ditto.
+	
+	* src/diag/pcitest.c: Use IQ80321 board.
+
+	* src/iq31244_pci.c: Enable outbound direct window.
+	* include/plf_io.h: Use outbound direct window.
+
+	* cdl/hal_arm_xscale_iq31244.cdl: Add diag/dmatest.c to compile list.
+
+2003-06-30  Mark Salter  <msalter@redhat.com>
+
+	* src/diag/i82546.c (pci_ether_test): Fixed.
+
+2003-06-11  Mark Salter  <msalter@redhat.com>
+
+	* cdl/hal_arm_xscale_iq31244.cdl: Change linux machine number to 327.
+
+	* include/hal_platform_setup.h: Use base/offset addressing for IIC.
+
+	* include/plf_io.h: Fix PCI slot idsel.
+
+	* src/iq80321_cf.c: Rework access macros. Fix CF writes.
+	
+	* src/diag/cftest.c: New file.
+	* src/diag/i2c.c: Ditto.
+	* src/diag/i2c.h: Ditto.
+	* src/diag/lm75.c: Ditto.
+	* src/diag/xscale_test.c: Add new tests.
+	* cdl/hal_arm_xscale_iq31244.cdl: Add new diag files.
+
+2003-05-16  Mark Salter  <msalter@redhat.com>
+
+	* src/iq31244.c: New file with cf commands and bexec command.
+	* cdl/hal_arm_xscale_iq31244.cdl: Compile iq31244_cf.c for RedBoot.
+	
+2003-03-26  Mark Salter  <msalter@redhat.com>
+
+	* include/hal_platform_setup.h: 8-bit CF bus for this board rev.
+
+2003-03-20  Mark Salter  <msalter@redhat.com>
+
+	* misc/redboot_RAM.ecm: CYGSEM_REDBOOT_NETWORKING_HAS_MULTIPLE_DEVS no
+	longer needed.
+	* misc/redboot_ROM.ecm: Ditto.
+	* misc/redboot_RAM_ALTMAP.ecm: Ditto.
+	* misc/redboot_ROM_ALTMAP.ecm: Ditto.
+
+2003-03-19  Mark Salter  <msalter@redhat.com>
+
+	* src/iq31244_pci.c (cyg_hal_plf_pci_init): Fix BAR setup.
+
+	* misc/redboot_RAM.ecm: Support multiple eth devices.
+	* misc/redboot_ROM.ecm: Ditto.
+	* misc/redboot_RAM_ALTMAP.ecm: Ditto.
+	* misc/redboot_ROM_ALTMAP.ecm: Ditto.
+
+	* include/plf_io.h (HAL_PCI_TRANSLATE_INTERRUPT): Fix for both
+	eth ports.
+
+2003-03-17  Mark Salter  <msalter@redhat.com>
+
+	* include/iq31244.h: Fix defines for HEX display.
+
+	* cdl/hal_arm_xscale_iq31244.cdl: Rename i82544.c i82546.c.
+	* src/diag/xscale_test.c (testMenu): Rename 82544 test to 82546.
+
+2003-03-11  Mark Salter  <msalter@redhat.com>
+
+	* src/diag/i82544.c: Only look for one device.
+	* src/diag/pcitest.c: Ditto.
+
+	* src/iq31244_pci.c: Remove PCI retry cruft. Configure bus.
+	
+	* include/plf_io.h: Fix to match hardware.
+	
+	* misc/redboot_RAM.ecm: CYGOPT_DEVS_FLASH_STRATA_NOT_IN_RAM set to 0.
+
+	* include/iq31244.h: Use CS5 for compact flash. SDRAM_DEVID is 0xA4.
+	Remove battery defines.
+
+	* include/hal_platform_setup.h: Fix chipselect setups for CS0 and CS5.
+	Remove PCI retry cruft.
+
+	* cdl/hal_arm_xscale_iq31244.cdl: Remove compile of diag/battery.c.
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

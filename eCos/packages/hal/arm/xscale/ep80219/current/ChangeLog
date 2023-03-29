@@ -1,0 +1,95 @@
+2005-08-08  Glenn Leary  <glennX.c.leary@intel.com>
+
+	* src/hal_daig.c (cyg_hal_plf_serial_getc_nonblock): Removed local echo
+	of stdin characters when an application is running. Has been
+	implemented in packages/redboot/current/src/syscall.c
+
+2005-08-02  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/diag/i557_eep.h: Added volatiles.
+
+	* src/diag/i2c.c: Support both i2c channels.
+
+	* cdl/hal_arm_xscale_ep80219.cdl: Added support for EP80219
+	variant with 82541 GBE.
+	* misc/redboot_RAM.ecm: Ditto.
+	* misc/redboot_ROM.ecm: Ditto.
+	* src/diag/i82541.c: Ditto.
+	* src/diag/xscale_test.c: Ditto.
+
+2005-06-13  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Implement PCI Config
+	flags on 321/219 family
+
+2004-11-22  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/hal_diag.c (cyg_hal_plf_serial_getc_nonblock): Enable local echo of stdin
+	characters when an application is running.
+
+2004-11-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* misc/redboot_RAM.ecm: Enable Hot Debug.
+	* misc/redboot_ROM.ecm: Ditto.
+
+2004-09-30  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_extras.h: Setup the uncached region as
+	bufferable for scrub loop performance.  The caching policy will be
+	changed to noncached/nonbufferable once the page tables have
+	copied to RAM.
+	* src/ep80219_misc.c (plf_hardware_init): Ditto.
+
+2004-09-29  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_platform_setup.h: Use proper offsets for I2C registers.
+
+2004-09-27  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_ep80219.cdl: Force the VERDE_IOP_FLAVOR to be
+	IOP219.
+
+2004-09-24  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/diag/i2c.c: Use I2C definitions provided by IOP_COMMON
+	package.
+	* include/hal_platform_setup.h: Ditto.
+
+2004-09-16  Drew Moseley  <drew.moseley@intel.com>
+
+	* New Port
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

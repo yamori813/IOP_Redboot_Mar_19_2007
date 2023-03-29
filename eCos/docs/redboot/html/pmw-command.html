@@ -1,0 +1,477 @@
+<!-- Copyright (C) 2005 Red Hat, Inc.                                -->
+<!-- This material may be distributed only subject to the terms      -->
+<!-- and conditions set forth in the Open Publication License, v1.0  -->
+<!-- or later (the latest version is presently available at          -->
+<!-- http://www.opencontent.org/openpub/).                           -->
+<!-- Distribution of the work or derivative of the work in any       -->
+<!-- standard (paper) book form is prohibited unless prior           -->
+<!-- permission is obtained from the copyright holder.               -->
+<HTML
+><HEAD
+><TITLE
+>pmw</TITLE
+><meta name="MSSmartTagsPreventParsing" content="TRUE">
+<META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="RedBoot User's Guide"
+HREF="redboot-guide.html"><LINK
+REL="UP"
+TITLE="Common Commands"
+HREF="common-commands.html"><LINK
+REL="PREVIOUS"
+TITLE="pmr"
+HREF="pmr-command.html"><LINK
+REL="NEXT"
+TITLE="reset"
+HREF="reset-command.html"></HEAD
+><BODY
+CLASS="REFENTRY"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>RedBoot User's Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="pmr-command.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="reset-command.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><H1
+><A
+NAME="PMW-COMMAND"
+></A
+>pmw</H1
+><DIV
+CLASS="REFNAMEDIV"
+><A
+NAME="AEN1952"
+></A
+><H2
+>Name</H2
+>pmw&nbsp;--&nbsp;Issue a PCI memory write.</DIV
+><DIV
+CLASS="REFSYNOPSISDIV"
+><A
+NAME="AEN1955"
+></A
+><H2
+>Synopsis</H2
+><P
+><B
+CLASS="COMMAND"
+>pmw</B
+>  [-u <TT
+CLASS="REPLACEABLE"
+><I
+>Upper PCI Address</I
+></TT
+>] {-b <TT
+CLASS="REPLACEABLE"
+><I
+>PCI Address</I
+></TT
+>} {-p <TT
+CLASS="REPLACEABLE"
+><I
+>pattern</I
+></TT
+>} [-l <TT
+CLASS="REPLACEABLE"
+><I
+>length</I
+></TT
+>] [-1 | -2 | -4]</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN1970"
+></A
+><H2
+>Arguments</H2
+><DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN1972"
+></A
+><P
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><THEAD
+><TR
+><TH
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Name</TH
+><TH
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Type</TH
+><TH
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Description</TH
+><TH
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Default</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-u <TT
+CLASS="REPLACEABLE"
+><I
+>Upper PCI Address</I
+></TT
+></TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Upper PCI Address</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Upper 32-bits of a 64-bit PCI Address of start of data.</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>0</I
+></SPAN
+></TD
+></TR
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-b <TT
+CLASS="REPLACEABLE"
+><I
+>PCI Address</I
+></TT
+></TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>PCI Address</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Lower 32-bits of PCI Address of start of data.</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>none</I
+></SPAN
+></TD
+></TR
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-l <TT
+CLASS="REPLACEABLE"
+><I
+>length</I
+></TT
+></TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Number</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Length of data in bytes</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>4</TD
+></TR
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-p <TT
+CLASS="REPLACEABLE"
+><I
+>pattern</I
+></TT
+></TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Pattern</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Pattern to be written.</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>none</I
+></SPAN
+></TD
+></TR
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-1</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Access one byte (8 bits) at a time.</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-1</TD
+></TR
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-2</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Access two bytes (16 bits) at a time.</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-1</TD
+></TR
+><TR
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-4</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>&nbsp;</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>Access one word (32 bits) at a time.</TD
+><TD
+WIDTH="25%"
+ALIGN="LEFT"
+VALIGN="TOP"
+>-1</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN2027"
+></A
+><H2
+>Description</H2
+><P
+>Fill a range of PCI memory with a constant 1, 2, or 4-byte pattern.</P
+></DIV
+><DIV
+CLASS="REFSECT1"
+><A
+NAME="AEN2030"
+></A
+><H2
+>Examples</H2
+><P
+>Fill a PCI memory buffer.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+> 
+RedBoot&#62; <TT
+CLASS="USERINPUT"
+><B
+>pmw -b 0x80000000 -l 0x20 -p 0xDEADFACE</B
+></TT
+>
+RedBoot&#62; <TT
+CLASS="USERINPUT"
+><B
+>pmr -b 0x80000000 -l 0x20</B
+></TT
+>
+80000000: DEADFACE DEADFACE DEADFACE DEADFACE  |................|
+80000010: DEADFACE DEADFACE DEADFACE DEADFACE  |................|</PRE
+></TD
+></TR
+></TABLE
+> </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="pmr-command.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="redboot-guide.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="reset-command.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>pmr</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="common-commands.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>reset</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

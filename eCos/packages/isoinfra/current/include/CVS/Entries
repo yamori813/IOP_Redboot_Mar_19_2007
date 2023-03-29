@@ -1,0 +1,25 @@
+/assert.h/1.2/Mon Nov 13 21:18:23 2006/-ko/
+/ctype.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/dirent.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/dlfcn.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/errno.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/fcntl.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/float.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/limits.h/1.2/Fri May 27 00:46:56 2005/-ko/
+/locale.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/mqueue.h/1.3/Thu May 29 21:56:24 2003/-ko/
+/netdb.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/pthread.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/sched.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/semaphore.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/setjmp.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/signal.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/stdarg.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/stddef.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/stdio.h/1.2/Fri May 27 00:46:56 2005/-ko/
+/stdlib.h/1.3/Thu May 29 21:56:24 2003/-ko/
+/string.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/termios.h/1.1.1.3/Fri Dec  6 19:40:01 2002/-ko/
+/time.h/1.2/Mon Nov 13 21:18:23 2006/-ko/
+/unistd.h/1.3/Mon Nov 13 21:18:23 2006/-ko/
+D

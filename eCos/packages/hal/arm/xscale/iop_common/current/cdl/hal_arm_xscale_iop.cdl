@@ -1,0 +1,561 @@
+# ====================================================================
+#
+#      hal_arm_xscale_iop.cdl
+#
+#      Intel XScale I/O Processor HAL package configuration data
+#
+# ====================================================================
+#####ECOSGPLCOPYRIGHTBEGIN####
+## -------------------------------------------
+## This file is part of eCos, the Embedded Configurable Operating System.
+## Copyright (C) 2004 Red Hat, Inc.
+##
+## eCos is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free
+## Software Foundation; either version 2 or (at your option) any later version.
+##
+## eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+## WARRANTY; without even the implied warranty of MERCHANTABILITY or
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+## for more details.
+##
+## You should have received a copy of the GNU General Public License along
+## with eCos; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+##
+## As a special exception, if other files instantiate templates or use macros
+## or inline functions from this file, or you compile this file and link it
+## with other works to produce a work based on this file, this file does not
+## by itself cause the resulting work to be covered by the GNU General Public
+## License. However the source code for this file must still be made available
+## in accordance with section (3) of the GNU General Public License.
+##
+## This exception does not invalidate any other reasons why a work based on
+## this file might be covered by the GNU General Public License.
+##
+## Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+## at http://sources.redhat.com/ecos/ecos-license/
+## -------------------------------------------
+#####ECOSGPLCOPYRIGHTEND####
+# ====================================================================
+######DESCRIPTIONBEGIN####
+#
+# Author(s):      drew.moseley@intel.com
+# Original data:  
+# Contributors:
+# Date:           2002-05-07
+#
+# Copyright:    (C) 2003-2004 Intel Corporation.
+#####DESCRIPTIONEND####
+#
+# ====================================================================
+cdl_package CYGPKG_HAL_ARM_XSCALE_IOP {
+    display       "Intel XScale I/O Processor Support"
+    parent        CYGPKG_HAL_ARM_XSCALE_CORE
+    hardware
+    requires { CYG_PCI_MAX_BUS == 256 }
+    requires { CYG_PCI_MIN_DEV == 0 }
+    requires { CYG_PCI_MAX_DEV == 32 }
+    requires { CYG_PCI_MAX_FN == 8 }
+    include_dir   cyg/hal
+    define_header hal_arm_xscale_iop.h
+    description   "
+        This HAL variant package provides generic support common
+        to Intel XScale I/O Processor. It is also necessary to 
+        select a specific target platform and CPU HAL package."
+
+    implements    CYGINT_HAL_ARM_ARCH_XSCALE_IOP
+
+    compile -library=libextras.a xscale_iop.c
+
+    cdl_option CYGSEM_HAL_ARM_XSCALE_IOP_PROVIDE_I2C_API {
+        display       "Provide I2C API"
+        flavor        bool
+        default_value 0
+        description   "
+           This option determines whether we provide an I2C API."
+    }
+
+    cdl_component CYGPKG_REDBOOT_HAL_ARM_XSCALE_IOP_OPTIONS {
+        display       "XScale IOP Redboot HAL options"
+        flavor        none
+        no_define
+        parent        CYGPKG_REDBOOT
+        active_if     CYGPKG_REDBOOT
+        description   "
+            This option defines the IOP Common requirements for a valid Redboot
+            configuration."
+
+        compile -library=libextras.a xscale_iop_redboot.c
+    
+        cdl_option CYGSEM_HAL_ARM_XSCALE_IOP_PROVIDE_PCI_REDBOOT_FNS {
+            display       "Provide RedBoot commands for PCI access"
+            flavor        bool
+            default_value 0
+            requires CYGPKG_IO_PCI
+            description   "
+           This option determines whether we provide RedBoot commands to issue
+           PCI Config/Memory/IO Read and Write cycles."
+        }
+
+        cdl_option CYGSEM_HAL_ARM_XSCALE_IOP_PROVIDE_ECC_REDBOOT_FNS {
+            display       "Provide RedBoot commands for ECC tests"
+            flavor        bool
+            default_value 0
+            description   "
+           This option determines whether we provide RedBoot commands to force
+           an ECC failure for diagnostic purposes."
+        }
+    }
+
+    cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_MEMORY_CONFIGURATION {
+        display "Intel XScale IOP Memory Configuration"
+        flavor  none
+        no_define
+        description   "
+            IOP Common Package specific build options controlling
+            the Memory and Flash configuration of the target system."
+
+        cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_LINUX_RAM_MAX {
+            display       "Maximum RAM supported by Linux on IOP Platforms"
+            flavor        data
+            default_value {0}
+            description   "
+            This option determines the maximum amount of RAM supported by
+            Linux on the IOP Platforms.  Various platforms support up to
+            1 GB RAM or more however Linux constraints currently limit
+            us to using only about 768MB.  A value of 0 implies that
+            we will not report a smaller SDRAM size than installed."
+        }
+
+        cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_SDRAM_PHYS_BASE {
+            display       "CRB SDRAM Physical Base Address"
+            flavor        data
+            default_value { 0x00000000 }
+            description   "
+            This option determines the physical base address of SDRAM."
+        }
+
+        cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PHYS_BASE {
+            display       "CRB Flash Physical Base Address"
+            flavor        data
+            default_value { 0xC0000000 }
+            description   "
+            This option determines the physical base address of SDRAM."
+        }
+
+        cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_SIZE {
+            display       "CRB Flash Size"
+            flavor        data
+            default_value { 0x800000 }
+            description   "
+            This option determines the size of Flash."
+        }
+    }
+
+    cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_CONFIGURATION {
+        display "Intel XScale IOP Common PCI Configuration"
+        requires CYGPKG_IO_PCI
+        flavor  none
+        no_define
+        description   "
+            IOP Common Package specific build options controlling
+            the ATU/PCI configuration of the target system."
+
+        cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_WINDOW_SIZES {
+            display "Intel XScale IOP PCI Window Size Defaults"
+            flavor  none
+            no_define
+            description   "
+                Default sizes of windows for the various PCI functions."
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_SIZE {
+                display       "Size of system RAM to expose through PCI."
+                flavor        data
+                default_value 0
+                legal_values  {
+                    0
+                    0x10 0x20 0x40 0x80
+                    0x100 0x200 0x400 0x800
+                    0x1000 0x2000 0x4000 0x8000
+                    0x10000 0x20000 0x40000 0x80000
+                    0x100000 0x200000 0x400000 0x800000
+                    0x1000000 0x2000000 0x4000000 0x8000000
+                }
+                description   "
+                    This option determines size of the window that will be used for sharing RAM via PCI.
+                    A value of 0 indicates the entire contents of RAM."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_SIZE {
+                display       "Size of MMRs to expose through PCI."
+                flavor        data
+                default_value 0x00100000
+                description   "
+                    This option determines size of the window that will be used for sharing MMRs via PCI."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_SIZE {
+                display       "Size of FLASH to expose through PCI."
+                flavor        data
+                calculated    CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_SIZE
+                description   "
+                    This option determines size of the window that will be used for sharing Flash via PCI."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_REDIRECT_PCI_SIZE {
+                display       "Size of public PCI window used for redirecting to hidden devices."
+                flavor        data
+                default_value 0x04000000
+                description   "
+                    This option determines size of the window that will be used for redirecting to hidden devices."
+            }
+        }
+
+        cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_WINDOW_TRANSLATE_VALUES {
+            display "Intel XScale IOP PCI Window Translate Value Defaults"
+            flavor  none
+            no_define
+            description   "
+                Default values of the Translate Value registers for the various PCI functions."
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR {
+                display       "Translate Value for system RAM PCI Window."
+                flavor        data
+                default_value CYGNUM_HAL_ARM_XSCALE_IOP_SDRAM_PHYS_BASE
+                description   "
+                    This option determines the translate value register value used for sharing RAM via PCI."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_TVR {
+                display       "Translate Value for MMRs PCI Window."
+                flavor        data
+                default_value 0xFFF00000
+                description   "
+                    This option determines the translate value register value used for sharing MMRs via PCI."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_TVR {
+                display       "Translate Value for Flash PCI Window."
+                flavor        data
+                calculated    CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PHYS_BASE
+                description   "
+                    This option determines the translate value register value used for sharing Flash via PCI."
+            }
+        }
+
+        cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_NUM_BARS {
+            display       "Number of PCI BARS implemented by this IOP."
+            flavor        data
+            default_value 4
+            description   "
+              This option determines the number of BARS implemented by this IOP."
+        }
+
+        cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_BAR_0 {
+            display "Intel XScale IOP BAR0 PCI Configuration"
+            flavor  none
+            no_define
+            active_if { CYGNUM_HAL_ARM_XSCALE_IOP_NUM_BARS >= 1 }
+            description   "
+                IOP BAR0 Configuration."
+ 
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION {
+                display "IOP BAR0 Function"
+                flavor        data
+                default_value {"MMRS"}
+                legal_values  {"MMRS" "RAM" "FLASH" "CUSTOM" "REDIRECT" "NOTHING" "PRIVMEM"}
+                description   "
+                BAR0 Function; ie what are we sharing over PCI via ATU_IABAR0.
+                MMRS = Memory Mapped Registers
+                RAM = System RAM
+                FLASH = System Non-volatile Storage
+                CUSTOM = Use user-defined custom values for both size and translate value
+                REDIRECT = Used as public PCI space to be reassigned to hidden devices
+                NOTHING = Do not enable
+                "
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_CUSTOM_SIZE {
+                display "IOP BAR0 Custom Size"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom size is used for ATU BAR0."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_CUSTOM_TVR {
+                display "IOP BAR0 Custom Translate Value"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom value is loaded into the ATU_IATVR0 Register."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_SIZE {
+                display "IOP BAR0 Size"
+                flavor        data
+                calculated  {                                                                                             \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "MMRS"     ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_SIZE     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "RAM"      ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_SIZE      : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "FLASH"    ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_SIZE    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "CUSTOM"   ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_CUSTOM_SIZE  : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "REDIRECT" ? CYGNUM_HAL_ARM_XSCALE_IOP_REDIRECT_PCI_SIZE : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "PRIVMEM"  ? 0						: \
+                    0                                                                                                     \
+                }
+                description   "
+                What size is used for ATU BAR0."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_TVR {
+                display "IOP BAR0 Translate Value"
+                flavor        data
+                calculated  {                                                                                          \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "MMRS"    ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_TVR    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "RAM"     ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "FLASH"   ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_TVR   : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "CUSTOM"  ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_CUSTOM_TVR : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "PRIVMEM" ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    0                                                                                                  \
+                }
+                description   "
+                What value is used for the Translate Value in ATU BAR0."
+            }
+        }
+
+        cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_BAR_1 {
+            display "Intel XScale IOP BAR1 PCI Configuration"
+            flavor  none
+            no_define
+            active_if { CYGNUM_HAL_ARM_XSCALE_IOP_NUM_BARS >= 2 }
+            description   "
+                IOP BAR1 Configuration."
+ 
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION {
+                display "IOP BAR1 Function"
+                flavor        data
+                default_value {"REDIRECT"}
+                legal_values  {"MMRS" "RAM" "FLASH" "CUSTOM" "REDIRECT" "NOTHING" "PRIVMEM"}
+                description   "
+                BAR1 Function; ie what are we sharing over PCI via ATU_IABAR1.
+                MMRS = Memory Mapped Registers
+                RAM = System RAM
+                FLASH = System Non-volatile Storage
+                CUSTOM = Use user-defined custom values for both size and translate value
+                REDIRECT = Used as public PCI space to be reassigned to hidden devices
+                NOTHING = Do not enable
+                "
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_CUSTOM_SIZE {
+                display "IOP BAR1 Custom Size"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom size is used for ATU BAR1."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_CUSTOM_TVR {
+                display "IOP BAR1 Custom Translate Value"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom value is loaded into the ATU_IATVR0 Register."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_SIZE {
+                display "IOP BAR1 Size"
+                flavor        data
+                calculated  {                                                                                             \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "MMRS"     ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_SIZE     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "RAM"      ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_SIZE      : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "FLASH"    ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_SIZE    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "CUSTOM"   ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_CUSTOM_SIZE  : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "REDIRECT" ? CYGNUM_HAL_ARM_XSCALE_IOP_REDIRECT_PCI_SIZE : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "PRIVMEM"  ? 0						: \
+                    0                                                                                                     \
+                }
+                description   "
+                What size is used for ATU BAR1."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_TVR {
+                display "IOP BAR1 Translate Value"
+                flavor        data
+                calculated  {                                                                                          \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "MMRS"    ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_TVR    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "RAM"     ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "FLASH"   ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_TVR   : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "CUSTOM"  ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_CUSTOM_TVR : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "PRIVMEM" ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    0                                                                                                  \
+                }
+                description   "
+                What value is used for the Translate Value in ATU BAR1."
+            }
+        }
+
+        cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_BAR_2 {
+            display "Intel XScale IOP BAR2 PCI Configuration"
+            flavor  none
+            no_define
+            active_if { CYGNUM_HAL_ARM_XSCALE_IOP_NUM_BARS >= 3 }
+            description   "
+                IOP BAR2 Configuration."
+ 
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION {
+                display "IOP BAR2 Function"
+                flavor        data
+                default_value {"RAM"}
+                legal_values  {"MMRS" "RAM" "FLASH" "CUSTOM" "REDIRECT" "NOTHING" "PRIVMEM"}
+                description   "
+                BAR2 Function; ie what are we sharing over PCI via ATU_IABAR2.
+                MMRS = Memory Mapped Registers
+                RAM = System RAM
+                FLASH = System Non-volatile Storage
+                CUSTOM = Use user-defined custom values for both size and translate value
+                REDIRECT = Used as public PCI space to be reassigned to hidden devices
+                NOTHING = Do not enable
+                "
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_CUSTOM_SIZE {
+                display "IOP BAR2 Custom Size"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom size is used for ATU BAR2."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_CUSTOM_TVR {
+                display "IOP BAR2 Custom Translate Value"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom value is loaded into the ATU_IATVR0 Register."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_SIZE {
+                display "IOP BAR2 Size"
+                flavor        data
+                calculated  {                                                                                             \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "MMRS"     ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_SIZE     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "RAM"      ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_SIZE      : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "FLASH"    ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_SIZE    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "CUSTOM"   ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_CUSTOM_SIZE  : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "REDIRECT" ? CYGNUM_HAL_ARM_XSCALE_IOP_REDIRECT_PCI_SIZE : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "PRIVMEM"  ? 0						: \
+                    0                                                                                                     \
+                }
+                description   "
+                What size is used for ATU BAR2."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_TVR {
+                display "IOP BAR2 Translate Value"
+                flavor        data
+                calculated  {                                                                                          \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "MMRS"    ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_TVR    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "RAM"     ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "FLASH"   ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_TVR   : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "CUSTOM"  ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_CUSTOM_TVR : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "PRIVMEM" ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    0                                                                                                  \
+                }
+                description   "
+                What value is used for the Translate Value in ATU BAR2."
+            }
+        }
+
+        cdl_component CYGPKG_HAL_ARM_XSCALE_IOP_PCI_BAR_3 {
+            display "Intel XScale IOP BAR3 PCI Configuration"
+            flavor  none
+            no_define
+            active_if { CYGNUM_HAL_ARM_XSCALE_IOP_NUM_BARS >= 4 }
+            description   "
+                IOP BAR3 Configuration."
+ 
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION {
+                display "IOP BAR3 Function"
+                flavor        data
+                default_value {"NOTHING"}
+                legal_values  {"MMRS" "RAM" "FLASH" "CUSTOM" "REDIRECT" "NOTHING" "PRIVMEM"}
+                description   "
+                BAR3 Function; ie what are we sharing over PCI via ATU_IABAR3.
+                MMRS = Memory Mapped Registers
+                RAM = System RAM
+                FLASH = System Non-volatile Storage
+                CUSTOM = Use user-defined custom values for both size and translate value
+                REDIRECT = Used as public PCI space to be reassigned to hidden devices
+                NOTHING = Do not enable
+                "
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_CUSTOM_SIZE {
+                display "IOP BAR3 Custom Size"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom size is used for ATU BAR3."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_CUSTOM_TVR {
+                display "IOP BAR3 Custom Translate Value"
+                active_if { CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "CUSTOM" }
+                flavor        data
+                default_value 0
+                description   "
+                What custom value is loaded into the ATU_IATVR0 Register."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_SIZE {
+                display "IOP BAR3 Size"
+                flavor        data
+                calculated  {                                                                                             \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "MMRS"     ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_SIZE     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "RAM"      ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_SIZE      : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "FLASH"    ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_SIZE    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "CUSTOM"   ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_CUSTOM_SIZE  : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "REDIRECT" ? CYGNUM_HAL_ARM_XSCALE_IOP_REDIRECT_PCI_SIZE : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "PRIVMEM"  ? 0						: \
+                    0                                                                                                     \
+                }
+                description   "
+                What size is used for ATU BAR3."
+            }
+
+            cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_TVR {
+                display "IOP BAR3 Translate Value"
+                flavor        data
+                calculated  {                                                                                          \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "MMRS"    ? CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_TVR    : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "RAM"     ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "FLASH"   ? CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PCI_TVR   : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "CUSTOM"  ? CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_CUSTOM_TVR : \
+                    CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "PRIVMEM" ? CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR     : \
+                    0                                                                                                  \
+                }
+                description   "
+                What value is used for the Translate Value in ATU BAR3."
+            }
+        }
+    }
+
+    cdl_option CYGNUM_HAL_ARM_XSCALE_IOP_HIDDEN_BUS_NUMBER {
+        display       "First bus number assigned to downstream hidden busses."
+        flavor        data
+        default_value 128
+        requires CYGPKG_IO_PCI
+        description   "
+           This option determines the default bus number for the first hidden downstream bus."
+    }
+
+}

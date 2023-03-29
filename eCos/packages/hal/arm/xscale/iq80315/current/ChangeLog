@@ -1,0 +1,63 @@
+2004-11-23  Curt Bruns  <curt.e.bruns@intel.com>
+
+	* src/iq80315_misc.c: Ensure that the BAR changes are complete before continuing
+	to remove a potential race condition with code executing later.
+
+2004-11-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* misc/redboot_ROM.ecm: Enable Hot Debug.
+
+2004-10-29  Mohit Khanna  <mohitx.khanna@intel.com>
+	* cdl/hal_arm_xscale_iq80315.cdl: Corrected the Machine ID.
+
+2004-08-13  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/plf_io.h: Removed alternate virtual memory configuration.
+	* include/iq80315.h: Ditto.
+	* include/hal_platform_extras.h: Ditto.
+	* cdl/hal_arm_xscale_iq80315.cdl: Ditto.
+	* include/pkgconf/mlt_arm_xscale_iq80315_ram_altmap.h: Ditto. Removed file.
+	* include/pkgconf/mlt_arm_xscale_iq80315_ram_altmap.ldi: Ditto. Removed file.
+	* include/pkgconf/mlt_arm_xscale_iq80315_rom_altmap.h: Ditto. Removed file.
+	* include/pkgconf/mlt_arm_xscale_iq80315_rom_altmap.ldi: Ditto. Removed file.
+	* misc/redboot_RAM_ALTMAP.ecm: Ditto. Removed file.
+	* misc/redboot_ROM_ALTMAP.ecm: Ditto. Removed file.
+	
+2004-08-05  Drew Moseley  <drew.moseley@intel.com>
+
+	* Initial port to the IQ80315 CRB.
+	
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 2004 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

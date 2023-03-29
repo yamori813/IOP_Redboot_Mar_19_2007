@@ -1,0 +1,104 @@
+2005-03-15  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/xscale_iop_redboot.c (do_pir): Use the IO registers rather
+	than the memory registers.
+
+2004-12-15  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_xscale_iop.h (CYGHWR_REDBOOT_LINUX_ATAG_MEM): Allow
+	limiting RAM reported to Linux.
+	* cdl/hal_arm_xscale_iop.cdl (CYGNUM_HAL_ARM_XSCALE_IOP_LINUX_RAM_MAX):
+	Ditto.
+
+2004-12-08  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop.cdl: Disable Private memory by default.
+	Share all SDRAM over BAR2 by default.
+
+2004-11-02  Mohit Khanna  <mohitx.khanna@intel.com>
+
+	* cdl/hal_arm_xscale_iop.cdl: Support Opaque/Private PCI memory.
+	* src/xscale_iop_redboot.c (do_pmr): Ditto.
+	(do_pmw): Ditto
+
+2004-09-30  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop.cdl: Allow platform to overrride
+	CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR.
+
+2004-09-29  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_xscale_iop.h (MCU_ECCR_SINGLE_BIT_REPORTING): New
+	defines for ECCR.
+
+	* src/xscale_iop_redboot.c (do_eccf): Cleanup and wait for
+	interrupt processing to finish.
+
+2004-09-28  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/xscale_iop.c (i2c_read_bytes): Don't shift the i2c_addr
+	here; it will be done before this API is called.
+
+2004-09-24  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_xscale_iop.h (I2C_ICCR): New registers for IOP310
+	support.
+
+2004-09-23  Drew Moseley  <drew.moseley@intel.com>
+
+	* include/hal_xscale_iop.h: Move I2C API implementation to
+	iop_common package.
+	* cdl/hal_arm_xscale_iop.cdl: Ditto.  Also support non-redboot
+	common IOP code.
+
+	* src/xscale_iop.c: New file for common IOP code (non-redboot).
+
+2004-08-17  Mohit Khanna  <mohitx.khanna@intel.com>
+	* cdl/hal_arm_xscale_iop.cdl: Added configuration requirements that
+	enforce the values of the CYG_PCI_MAX_BUS, CYG_PCI_MIN_DEV,
+	CYG_PCI_MAX_DEV, CYG_PCI_MAX_FN cdl configuration options.
+
+2004-08-17  Drew Moseley  <drew.moseley@intel.com>
+
+	* cdl/hal_arm_xscale_iop.cdl: Convert all PCI window configuration
+	to CDL rather than arbitrary hardcoded values.
+
+2004-06-10  Drew Moseley  <drew.moseley@intel.com>
+
+	* src/xscale_iop_redboot.c (do_pcw): Support PCIE Extended
+	Configuration Space
+
+//===========================================================================
+//####ECOSGPLCOPYRIGHTBEGIN####
+// -------------------------------------------
+// This file is part of eCos, the Embedded Configurable Operating System.
+// Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004 Red Hat, Inc.
+//
+// eCos is free software; you can redistribute it and/or modify it under
+// the terms of the GNU General Public License as published by the Free
+// Software Foundation; either version 2 or (at your option) any later version.
+//
+// eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+// for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with eCos; if not, write to the Free Software Foundation, Inc.,
+// 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+//
+// As a special exception, if other files instantiate templates or use macros
+// or inline functions from this file, or you compile this file and link it
+// with other works to produce a work based on this file, this file does not
+// by itself cause the resulting work to be covered by the GNU General Public
+// License. However the source code for this file must still be made available
+// in accordance with section (3) of the GNU General Public License.
+//
+// This exception does not invalidate any other reasons why a work based on
+// this file might be covered by the GNU General Public License.
+//
+// Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+// at http://sources.redhat.com/ecos/ecos-license/
+// -------------------------------------------
+//####ECOSGPLCOPYRIGHTEND####
+//===========================================================================

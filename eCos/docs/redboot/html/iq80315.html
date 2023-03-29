@@ -1,0 +1,1497 @@
+<!-- Copyright (C) 2005 Red Hat, Inc.                                -->
+<!-- This material may be distributed only subject to the terms      -->
+<!-- and conditions set forth in the Open Publication License, v1.0  -->
+<!-- or later (the latest version is presently available at          -->
+<!-- http://www.opencontent.org/openpub/).                           -->
+<!-- Distribution of the work or derivative of the work in any       -->
+<!-- standard (paper) book form is prohibited unless prior           -->
+<!-- permission is obtained from the copyright holder.               -->
+<HTML
+><HEAD
+><TITLE
+>ARM/XScale Intel IQ80315</TITLE
+><meta name="MSSmartTagsPreventParsing" content="TRUE">
+<META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.76b+
+"><LINK
+REL="HOME"
+TITLE="RedBoot User's Guide"
+HREF="redboot-guide.html"><LINK
+REL="UP"
+TITLE="Installation and Testing"
+HREF="installation-and-testing.html"><LINK
+REL="PREVIOUS"
+TITLE="ARM/XScale Intel IQ80332"
+HREF="iq80332.html"><LINK
+REL="NEXT"
+TITLE="ARM/Xscale Intel IQ31244"
+HREF="iq31244.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>RedBoot User's Guide</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="iq80332.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Installation and Testing</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="iq31244.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="IQ80315"
+></A
+>ARM/XScale Intel IQ80315</H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3387"
+></A
+>Overview</H2
+><P
+>RedBoot supports
+the serial port and the built-in ethernet port for communication and downloads.
+The default serial port settings are 115200,8,N,1. RedBoot also supports flash
+management for the onboard 8MB flash.</P
+><P
+>The following RedBoot configurations are supported:
+
+      <DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3397"
+></A
+><P
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><THEAD
+><TR
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Configuration</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Mode</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>Description</TH
+><TH
+ALIGN="LEFT"
+VALIGN="TOP"
+>File</TH
+></TR
+></THEAD
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>ROM</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>[ROM]</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>RedBoot running from the board's flash boot
+	      sector.</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>redboot_ROM.ecm</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>RAM</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>[RAM]</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>RedBoot running from RAM with RedBoot in the
+	      flash boot sector.</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>redboot_RAM.ecm</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3416"
+></A
+>Initial Installation Method</H2
+><P
+>The initial flash programming must be done through the JTAG port. See board manufacturers documentation for more information on programming flash through JTAG. RedBoot should be programmed to flash offset 0x00000000 using the JTAG flash utility.</P
+><P
+>Two sets of prebuilt files are provided in a tarball. Each set corresponds to one of the supported configurations and includes an ELF file (.elf), a binary image (.bin), and an S-record file (.srec).
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>For RedBoot running from the flash boot sector:
+bin/redboot_ROM.bin
+bin/redboot_ROM.elf
+bin/redboot_ROM.srec
+
+For RedBoot running from RAM with RedBoot in the flash boot sector:
+bin/redboot_RAM.bin
+bin/redboot_RAM.elf
+bin/redboot_RAM.srec</PRE
+></TD
+></TR
+></TABLE
+>
+Initial installations use the flash-based RedBoots. Installation and use of RAM based RedBoots is documented elsewhere.</P
+><P
+>After booting the initial installation of RedBoot, this warning may
+be printed: <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>flash configuration checksum error or invalid key</PRE
+></TD
+></TR
+></TABLE
+>This is normal, and indicates that the flash must be configured
+for use by RedBoot. Even if the above message is not printed, it may be a
+good idea to reinitialize the flash anyway. Do this with the <B
+CLASS="COMMAND"
+>fis</B
+> command: <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>RedBoot&#62; <TT
+CLASS="USERINPUT"
+><B
+>fis init</B
+></TT
+>
+About to initialize [format] FLASH image system - continue (y/n)? <TT
+CLASS="USERINPUT"
+><B
+>y</B
+></TT
+>
+*** Initialize FLASH Image System
+    Warning: device contents not erased, some blocks may not be usable
+    Warning: device contents not erased, some blocks may not be usable
+... Unlock from 0x407e0000-0x40800000: .
+... Erase from 0x407e0000-0x40800000: .
+... Program from 0x0ffdf000-0x0ffff000 at 0x407e0000: .
+... Lock from 0x407e0000-0x40800000: .</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3427"
+></A
+>Switch Settings</H2
+><P
+>The 80315 board is highly configurable through a number of switches and jumpers.
+RedBoot makes some assumptions about board configuration and attention must be paid
+to these assumptions for reliable RedBoot operation:
+<P
+></P
+><UL
+><LI
+><P
+>For the IQ80315 switch settings, the following is a known good
+configuration:
+<DIV
+CLASS="INFORMALTABLE"
+><A
+NAME="AEN3433"
+></A
+><P
+></P
+><TABLE
+BORDER="1"
+CLASS="CALSTABLE"
+><TBODY
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C1-1</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C1-4</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Off</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C1-2</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Off</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C1-3</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>Off</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C2-1</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C2-2</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C2-3</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S5C2-4</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S6C2-1</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S6C2-2</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S6C2-3</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>S6C2-4</TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+>On</TD
+></TR
+></TBODY
+></TABLE
+><P
+></P
+></DIV
+></P
+></LI
+></UL
+></P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3472"
+></A
+>LED Codes</H2
+><P
+>RedBoot uses the two digit LED display to indicate status during   board
+initialization. Possible codes are:</P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>LED     	Actions
+-------------------------------------------------------------
+IC + ErrorCode	I2C Error reading SPD device - see below for I2C error codes
+
+01		Reading ByteCount from first populated DIMM populated
+
+02		Reading ByteCount from Bank1 (if populated)
+
+03		Reading ByteCount from Bank2 (if populated)
+
+04		SDRAM registers initialized
+
+05		ECC Enabled
+
+SL		Scrub Loop - initializing RAM to 0x0
+
+08		Vector Code copied to RAM
+
+09		Cache Flushed after vector copy
+
+10		MMU Page Tables copied to RAM
+
+11		Cache flushed after page table copy
+
+PP		32Meg memory test passed
+
+FF		32Meg memory test failed - RedBoot will not run if this test fails
+
+EC		ECC error occurred during 32Meg Memory Test - RedBoot will not run if this test fails
+
+A1		Boot complete
+
+--------I2C Error Codes----------------------------------
+
+01		I2C timed out reading an SPD byte
+
+22		No DDR Module installed
+
+02		Invalid Refresh Value found in SPD
+
+03		Neither CAS1.5 or CAS2.5 supported by this DIMM 
+
+04		Burst length of 2 not supported by this DIMM
+
+05		x4, x8, x16 not supported by DIMM
+
+06		x4, x8, x16 for ECC_SZ not supported by DIMM
+
+07		Buffered/Registered invalid
+
+08		Number of PHY banks invalid
+
+09		Number of Logical banks invalid
+
+10		Number of Columns invalid
+
+11		TRas invalid
+
+12		TRcd invalid
+
+13		Trp invalid
+
+14		Trfc invalid
+
+15		Density invalid in first populated DDR slot
+
+16		Density invalid for DDR_1
+
+17		Dimm size invalid for DDR_1
+
+18		Num banks invalid for DDR_1
+	
+19		Density invalid for DDR_2
+
+20		Dimm size invalid for DDR_2
+
+21		Num banks invalid for DDR_2</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3476"
+></A
+>Special RedBoot Commands</H2
+><P
+>A special RedBoot command, <B
+CLASS="COMMAND"
+>diag</B
+>, is used to
+access a set of hardware diagnostics. To access the diagnostic menu,
+enter <B
+CLASS="COMMAND"
+>diag</B
+> at the RedBoot prompt:
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>RedBoot&#62; <TT
+CLASS="USERINPUT"
+><B
+>diag</B
+></TT
+>
+Entering Hardware Diagnostics - Disabling Data Cache!
+
+ IQ80315 Diags
+
+ 1 - Memory Test Sub-Menu
+ 2 - Rotary Switch Test
+ 3 - 7 Segment LED Tests
+ 4 - IOC80314 Ethernet Configuration
+ 5 - Battery Status Test
+ 6 - Battery Backup SDRAM Memory Test
+ 7 - Timer Test
+ 8 - PCI Bus test
+ 9 - CPU Cache Loop (No return)
+10 - Read DDR0 and DDR1 Size on I2C
+11 - Read Temp Sensor(s) on I2C
+12 - Basic Sanity Tests
+13 - Loop Version of Basic Sanity Tests
+14 - EEPROM menu
+15 - RTC menu
+16 - Fan menu
+17 - Test Buzzer
+18 - CompactFlash Test
+19 - LCD Test Menu
+ 0 - quit
+Enter the menu item number (0 to quit):&#13;</PRE
+></TD
+></TR
+></TABLE
+>
+Tests for various hardware subsystems are provided, and some tests require
+special hardware in order to execute normally. The Ethernet Configuration
+item may be used to set the board ethernet address.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3483"
+></A
+>Memory Tests Sub Menu</H3
+><P
+>This test is used to test installed DDR SDRAM memory. Selecting this option presents the user with the following menu.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>============================================
+|         Memory Test Sub Menu             |
+============================================
+|              Parameters                  |
+| 0) Select Test Base and Range            |
+| 1) Select # of Itterations               |
+| 2) Enable or Disable Data Cache          |
+| 3) Disable ECC                           |
+|                                          |
+|----------------Tests---------------------|
+| 4) Basic Memory Tests                    |
+| 5) Pattern Memory Tests                  |
+| 6) Pattern Memory Tests Variation        |
+| 7) Address as Data Memory Tests          |
+| 8) Run all Tests Sequentially            |
+| 9) Return to Main Menu                   |
+============================================</PRE
+></TD
+></TR
+></TABLE
+>
+The first four options allow the user to set/enable/disable the various parameters that are required for the actual memory diagnostics which are presented as the remaining six options.</P
+><P
+>Selecting the Basic Memory Tests options executes the following test.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>Walking 1's test: 
+0000000100000002000000040000000800000010000000200000004000000080
+0000010000000200000004000000080000001000000020000000400000008000
+0001000000020000000400000008000000100000002000000040000000800000
+0100000002000000040000000800000010000000200000004000000080000000
+passed
+32-bit address test: passed
+32-bit address bar test: passed
+8-bit address test: passed
+Byte address bar test: passed
+Memory test done.</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>Selecting the Patter Memory Tests executes the following test.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>Enabling data cache
+Starting Iteration: 1
+Testing memory from 0x00000000 to 0xffffffff.
+Filling Pattern: 0x00000000
+Verifying Pattern: 0x00000000
+Filling Pattern: 0xffffffff
+Verifying Pattern: 0xffffffff
+Filling Pattern: 0xffff0000
+Verifying Pattern: 0xffff0000
+Filling Pattern: 0x0000ffff
+Verifying Pattern: 0x0000ffff
+Filling Pattern: 0xff00ff00
+Verifying Pattern: 0xff00ff00
+Filling Pattern: 0x00ff00ff
+Verifying Pattern: 0x00ff00ff
+Filling Pattern: 0xf0f0f0f0
+Verifying Pattern: 0xf0f0f0f0
+Filling Pattern: 0x0f0f0f0f
+Verifying Pattern: 0x0f0f0f0f
+Filling Pattern: 0xaaaa5555
+Verifying Pattern: 0xaaaa5555
+Filling Pattern: 0x5555aaaa
+Verifying Pattern: 0x5555aaaa
+Filling Pattern: 0x5a5a5a5a
+Verifying Pattern: 0x5a5a5a5a
+Filling Pattern: 0x55aa55aa
+Verifying Pattern: 0x55aa55aa
+Filling Pattern: 0xaa55aa55
+Verifying Pattern: 0xaa55aa55
+Filling Pattern: 0xa5a5a5a5
+Verifying Pattern: 0xa5a5a5a5
+Filling Pattern: 0xcccc3333
+Verifying Pattern: 0xcccc3333
+Filling Pattern: 0x3333cccc
+Verifying Pattern: 0x3333cccc
+Filling Pattern: 0x33cc33cc
+Verifying Pattern: 0x33cc33cc
+Filling Pattern: 0xcc33cc33
+Verifying Pattern: 0xcc33cc33
+Filling Pattern: 0x3c3c3c3c
+Verifying Pattern: 0x3c3c3c3c
+Filling Pattern: 0xc3c3c3c3
+Verifying Pattern: 0xc3c3c3c3
+
+Memory test done.
+
+Checking for any ECC SingleBit Errors
+No ECC Errors Found
+********** SUMMARY ************
+Iterations: 1
+Failed Runs:  0
+Pass/Fail: Pass
+*******************************</PRE
+></TD
+></TR
+></TABLE
+>
+This test basically writes and verifies a pattern to a user defined range of memory.</P
+><P
+>Selecting the Pattern Memory Tests Variation performs the following operation
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>** STARTING Pattern Memory Tests Variation **
+Enabling data cache
+Starting Iteration: 1
+Testing memory from 0x00000000 to 0xffffffff.
+Clearing SDRAM Test Range
+Filling Pattern: 0x00000000 and immediately verifying
+Verifying Pattern over full range: 0x00000000
+Filling Pattern: 0xffffffff and immediately verifying
+Verifying Pattern over full range: 0xffffffff
+Filling Pattern: 0xffff0000 and immediately verifying
+Verifying Pattern over full range: 0xffff0000
+Filling Pattern: 0x0000ffff and immediately verifying
+Verifying Pattern over full range: 0x0000ffff
+Filling Pattern: 0xff00ff00 and immediately verifying
+Verifying Pattern over full range: 0xff00ff00
+Filling Pattern: 0x00ff00ff and immediately verifying
+Verifying Pattern over full range: 0x00ff00ff
+Filling Pattern: 0xf0f0f0f0 and immediately verifying
+Verifying Pattern over full range: 0xf0f0f0f0
+Filling Pattern: 0x0f0f0f0f and immediately verifying
+Verifying Pattern over full range: 0x0f0f0f0f
+Filling Pattern: 0xaaaa5555 and immediately verifying
+Verifying Pattern over full range: 0xaaaa5555
+Filling Pattern: 0x5555aaaa and immediately verifying
+Verifying Pattern over full range: 0x5555aaaa
+Filling Pattern: 0x5a5a5a5a and immediately verifying
+Verifying Pattern over full range: 0x5a5a5a5a
+Filling Pattern: 0x55aa55aa and immediately verifying
+Verifying Pattern over full range: 0x55aa55aa
+Filling Pattern: 0xaa55aa55 and immediately verifying
+Verifying Pattern over full range: 0xaa55aa55
+Filling Pattern: 0xa5a5a5a5 and immediately verifying
+Verifying Pattern over full range: 0xa5a5a5a5
+Filling Pattern: 0xcccc3333 and immediately verifying
+Verifying Pattern over full range: 0xcccc3333
+Filling Pattern: 0x3333cccc and immediately verifying
+Verifying Pattern over full range: 0x3333cccc
+Filling Pattern: 0x33cc33cc and immediately verifying
+Verifying Pattern over full range: 0x33cc33cc
+Filling Pattern: 0xcc33cc33 and immediately verifying
+Verifying Pattern over full range: 0xcc33cc33
+Filling Pattern: 0x3c3c3c3c and immediately verifying
+Verifying Pattern over full range: 0x3c3c3c3c
+Filling Pattern: 0xc3c3c3c3 and immediately verifying
+Verifying Pattern over full range: 0xc3c3c3c3
+
+Memory test done.
+
+Checking for any ECC SingleBit Errors
+No ECC Errors Found
+********** SUMMARY ************
+Iterations: 1
+Failed Runs:  0
+Pass/Fail: Pass
+*******************************</PRE
+></TD
+></TR
+></TABLE
+>
+This test is just a simple variation of the preceding memory tests.</P
+><P
+>Address as Data Memory Tests
+This test verifies teh data in the memory range on the SRDRAM as addresses.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>** STARTING Address as Data Memory Tests **
+Enabling data cache
+Starting Iteration: 1
+Testing memory from 0x00000000 to 0xffffffff.
+Verifying Data as Addresses
+Now Verifying from Top to Bottom
+Verifying Data as Addresses
+
+Memory test done.
+
+Checking for any ECC SingleBit Errors
+No ECC Errors Found
+********** SUMMARY ************
+Iterations: 1
+Failed Runs:  0
+Pass/Fail: Pass
+*******************************</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>Run all Tests Sequentially (final option on the memory diagnostics sub-menu)
+This test runs all above mentioned memory diagnostic tests in a sequential order.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3496"
+></A
+>Rotary Switch S1 Test</H3
+><P
+>This tests the operation of the sixteen position rotary switch. When run,
+this test will display the current position of the rotary switch on the LED
+display. Slowly dial through each position and confirm reading on LED.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3499"
+></A
+>7 Segment LED Tests</H3
+><P
+>This tests the operation of the seven segment displays. When run, each
+LED cycles through 0 through F and a decimal point.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3502"
+></A
+>IOC80314 Ethernet Configuration</H3
+><P
+>This test initializes the ethernet controller&#8217;s serial EEPROM if
+the current contents are invalid. In any case, this test will also allow the
+user to enter a six byte ethernet MAC address into the serial EEPROM.</P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>Enter the menu item number (0 to quit): <TT
+CLASS="USERINPUT"
+><B
+>4</B
+></TT
+>
+
+IOC80314 Ethernet Configuration
+Total Data Pairs in EEPROM: 0x2
+Address: 0xfffe6044
+Found PORT0 Lower Address in EEPROM at location: 0xc
+Data: 0x0200ffff
+Address: 0xfffe6040
+Found PORT0 Upper Address in EEPROM at location: 0x14
+Data: 0x2ecb00b3
+Port0 MAC Address from EEPROM: 00:02:b3:00:cb:2e
+1) Set MAC Address for Port0
+2) Set MAC Address for Port1
+<TT
+CLASS="USERINPUT"
+><B
+>1</B
+></TT
+>
+
+Current MAC address: 00:80:4d:46:00:02
+Enter desired MAC address: <TT
+CLASS="USERINPUT"
+><B
+>00:80:4d:46:00:01</B
+></TT
+>
+Writing to the Serial EEPROM... Done
+
+******** Reset The Board To Have Changes Take Effect ********</PRE
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3509"
+></A
+>Battery Status Test</H3
+><P
+>This tests the current status of the battery. First, the test checks to
+see if the battery is installed and reports that finding. If the battery is
+installed, the test further determines whether the battery status is one or
+more of the following:
+<P
+></P
+><UL
+><LI
+><P
+>Battery is charging.</P
+></LI
+><LI
+><P
+>Battery is fully discharged.</P
+></LI
+><LI
+><P
+>Battery voltage measures within normal operating range.</P
+></LI
+></UL
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3519"
+></A
+>Battery Backup SDRAM Memory Test</H3
+><P
+>This tests the battery backup of SDRAM memory. This test is a three
+step process:</P
+><P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Select Battery backup test from main diag menu, then write
+data to SDRAM.</P
+></LI
+><LI
+><P
+>Turn off power for 60 seconds, then repower the board.</P
+></LI
+><LI
+><P
+>Select Battery backup test from main diag menu, then check
+data that was written in step 1.</P
+></LI
+></OL
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3529"
+></A
+>Timer Test</H3
+><P
+>This tests the internal timer by printing a number of dots at one
+second intervals.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3532"
+></A
+>PCI Bus Test</H3
+><P
+>This tests the secondary PCI-X bus and socket. This test requires that
+an IQ80310 board be plugged into the secondary slot of the IQ80321 board.
+The test assumes at least 32MB of installed memory on the IQ80310. That memory
+is mapped into the IQ80321 address space and the memory tests are run on that
+memory.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3535"
+></A
+>CPU Cache Loop</H3
+><P
+>This test puts the CPU into a tight loop run entirely from the ICache.
+This should prevent all external bus accesses.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3538"
+></A
+>Read DDR0 and DDR1 Size on I2C</H3
+><P
+>This test probes the SPD devices on BANK0 and BANK1 of the IQ80315 and reports how memory is inserted into the banks.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3541"
+></A
+>Read Temp Sensor(s) on I2C</H3
+><P
+>The two temperature sensors located on the I2C bus can be probed using this diagnostic. The output continuously reports the temperature of the two devices (in C).</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3544"
+></A
+>Basic Sanity Tests</H3
+><P
+>This executes the memory test on SRAM and SDRAM, the seven segment display test and the PHY Register test, and finally also reads from an internal register of the IOC80314.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3547"
+></A
+>Loop Version of Basic Sanity Tests</H3
+><P
+>Performs the above mentioned tests, except in a loop. The test can be stopped by hitting the 'enter' key on the keyboard.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3550"
+></A
+>EEPROM menu</H3
+><P
+>The EEPROM menu option presents a menu of EEPROM diagnostics that can be run for the IQ80315.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>=======================================
+|  I2C EEPROM menu for IQ80315         |
+=======================================
+| 1) Read  EEPROM                      |
+| 2) Write EEPROM                      |
+| 3) Erase EEPROM                      |
+---------------------------------------</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>Selecting Read EEPROM presents the folling menu.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>Total of 2 address/data pairs in EEPROM
+Choose Read Method:
+1) Address Data Pairs
+2) Dump All Valid Bytes
+3) Dump Select Bytes</PRE
+></TD
+></TR
+></TABLE
+>
+The first option will print all the address data pairs in EEPROM. The second option prints out all valid bytes and the final option queries the user for an address and dumps the data at that location.</P
+><P
+>Selecting Write queries for a location where user queried data will be written to.</P
+><P
+>Selecting Erase EEPROM option erases the entire eeprom. </P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3558"
+></A
+>RTC Menu</H3
+><P
+>This diagnostic allows the programming and the reading of the RTC on the I2C bus.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>=======================================
+|  Real Time Clock Menu for IQ80315    |
+=======================================
+| 1) Display Current Time              |
+| 2) Set Time                          |
+---------------------------------------</PRE
+></TD
+></TR
+></TABLE
+>
+The names of these options are pretty self-explanatory. The first displays the time the clock is currently set to, and the final option allows the user to set the time.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3562"
+></A
+>Fan menu</H3
+><P
+>This menu allows the user to toggle the front and the rear fans.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>=======================================
+|  I2C Case Fan menu for IQ80315       |
+=======================================
+| 1) Turn Front Case Fans On           |
+| 2) Turn Front Case Fans Off          |
+| 3) Turn Rear  Case Fans On           |
+| 4) Turn Rear  Case Fans Off          |
+---------------------------------------</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3566"
+></A
+>Test Buzzer</H3
+><P
+>This option outputs a square wave from teh RTC to the buzzer or speaker.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3569"
+></A
+>CompactFlash Test</H3
+><P
+>This option performs a read/write test on the compact flash device.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN3572"
+></A
+>LCD Test Menu</H3
+><P
+>This menu provides further more options how to manupilate the LCD.
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="SCREEN"
+>+======================================+
+|        LCD Menu for IQ80315          |
++======================================+
+| 1) Fill 1x16 Display                 |
+| 2) Fill 2x16 Display                 |
+| 3) Fill 1x20 Display                 |
+| 4) Fill 2x20 Display                 |
+| 5) Fill 4x20 Display                 |
+| 6) Fill 1x40 Display                 |
+| 7) Fill 2x40 Display                 |
+| 8) Clear Display                     |
++--------------------------------------+</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3576"
+></A
+>Rebuilding RedBoot</H2
+><P
+>These shell variables provide the platform-specific information
+needed for building RedBoot according to the procedure described in
+<A
+HREF="rebuilding-redboot.html"
+>Chapter 3</A
+>:
+<TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>export TARGET=iq80315
+export ARCH_DIR=arm
+export PLATFORM_DIR=xscale/iq80315</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>The names of configuration files are listed above with the
+description of the associated modes.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3582"
+></A
+>Interrupts</H2
+><P
+>RedBoot uses an interrupt vector table which is located at address 0x8004.
+Entries in this table are pointers to functions with this protoype::      <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>int irq_handler( unsigned vector, unsigned data )</PRE
+></TD
+></TR
+></TABLE
+></P
+><P
+>On an IQ80315
+board, the vector argument is one of 34 interrupts defined in <TT
+CLASS="COMPUTEROUTPUT"
+>hal/arm/xscale/ioc80314/current/include/hal_var_ints.h:</TT
+>:   <TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>#define CYGNUM_HAL_INTERRUPT_NONE         -1
+#define CYGNUM_HAL_INTERRUPT_DMA0_EOT      0
+#define CYGNUM_HAL_INTERRUPT_DMA0_EOC      1
+#define CYGNUM_HAL_INTERRUPT_DMA1_EOT      2
+#define CYGNUM_HAL_INTERRUPT_DMA1_EOC      3
+#define CYGNUM_HAL_INTERRUPT_RSVD_4        4
+#define CYGNUM_HAL_INTERRUPT_RSVD_5        5
+#define CYGNUM_HAL_INTERRUPT_AA_EOT        6
+#define CYGNUM_HAL_INTERRUPT_AA_EOC        7
+#define CYGNUM_HAL_INTERRUPT_CORE_PMON     8
+#define CYGNUM_HAL_INTERRUPT_TIMER0        9
+#define CYGNUM_HAL_INTERRUPT_TIMER1        10
+#define CYGNUM_HAL_INTERRUPT_I2C_0         11
+#define CYGNUM_HAL_INTERRUPT_I2C_1         12
+#define CYGNUM_HAL_INTERRUPT_MESSAGING     13
+#define CYGNUM_HAL_INTERRUPT_ATU_BIST      14
+#define CYGNUM_HAL_INTERRUPT_PERFMON       15
+#define CYGNUM_HAL_INTERRUPT_CORE_PMU      16
+#define CYGNUM_HAL_INTERRUPT_BIU_ERR       17
+#define CYGNUM_HAL_INTERRUPT_ATU_ERR       18
+#define CYGNUM_HAL_INTERRUPT_MCU_ERR       19
+#define CYGNUM_HAL_INTERRUPT_DMA0_ERR      20
+#define CYGNUM_HAL_INTERRUPT_DMA1_ERR      21
+#define CYGNUM_HAL_INTERRUPT_RSVD_22       22
+#define CYGNUM_HAL_INTERRUPT_AA_ERR        23
+#define CYGNUM_HAL_INTERRUPT_MSG_ERR       24
+#define CYGNUM_HAL_INTERRUPT_SSP           25
+#define CYGNUM_HAL_INTERRUPT_RSVD_26       26
+#define CYGNUM_HAL_INTERRUPT_XINT0         27
+#define CYGNUM_HAL_INTERRUPT_XINT1         28
+#define CYGNUM_HAL_INTERRUPT_XINT2         29
+#define CYGNUM_HAL_INTERRUPT_XINT3         30
+#define CYGNUM_HAL_INTERRUPT_HPI           31
+#define CYGNUM_HAL_INTERRUPT_SERIAL_A      32 // 16x50 uart A
+#define CYGNUM_HAL_INTERRUPT_SERIAL_B      33 // 16x50 uart B</PRE
+></TD
+></TR
+></TABLE
+>
+The data passed to the ISR is pulled from a data table <TT
+CLASS="COMPUTEROUTPUT"
+>(hal_interrupt_data)</TT
+> which immediately follows the interrupt vector table. </P
+><P
+>An application may create a normal C function with the above prototype
+to be an ISR. Just poke its address into the table at the correct index and
+enable the interrupt at its source. The return value of the ISR is ignored
+by RedBoot.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN3591"
+></A
+>Memory Maps</H2
+><P
+>The RAM based page table is located at RAM start + 0x4000.
+<DIV
+CLASS="NOTE"
+><BLOCKQUOTE
+CLASS="NOTE"
+><P
+><B
+>NOTE: </B
+>The virtual memory maps in this section use a C, B, and X column to indicate
+the caching policy for the region..</P
+></BLOCKQUOTE
+></DIV
+></P
+><P
+><TABLE
+BORDER="5"
+BGCOLOR="#E0E0F0"
+WIDTH="70%"
+><TR
+><TD
+><PRE
+CLASS="PROGRAMLISTING"
+>&#13;X C B  Description
+- - -  ---------------------------------------------
+0 0 0  Uncached/Unbuffered
+0 0 1  Uncached/Buffered
+0 1 0  Cached/Buffered    Write Through, Read Allocate
+0 1 1  Cached/Buffered    Write Back, Read Allocate
+1 0 0  Invalid -- not used
+1 0 1  Uncached/Buffered  No write buffer coalescing
+1 1 0  Mini DCache - Policy set by Aux Ctl Register
+1 1 1  Cached/Buffered    Write Back, Read/Write Allocate
+
+Physical Address Range     Description
+-----------------------    ----------------------------------
+0x00000000 - 0x40000000		SDRAM
+0x40000000 - 0x50000000 	FLASH/PBI
+0x50000000 - 0x50100000		SRAM
+0x50100000 - 0x50110000		Control Registers
+0x60000000 - 0x80000000		Un-cached SDRAM Alias
+0x80000000 - 0x9EFF0000		PCI1 MEM32
+0x9EFF0000 - 0x9F000000		PCI1 I/O
+0x9F000000 - 0xA0000000		PCI1 CFG
+0xA0000000 - 0xB0000000		PCI1 PFM1
+0xB0000000 - 0xC0000000		PCI1 PFM2
+0xC0000000 - 0xDEFF0000		PCI2 MEM32
+0xDEFF0000 - 0xDF000000		PCI2 I/O
+0xDF000000 - 0xE0000000		PCI2 CFG
+0xE0000000 - 0xF0000000		PCI2 PFM1
+0xF0000000 - 0xFFFFFFFF		PCI2 PFM2
+
+Default Virtual Map      X C B  Description
+-----------------------  - - -  ----------------------------------
+0x00000000 - 0x40000000 1 1 1 SDRAM
+0x40000000 - 0x50000000 0 1 0 FLASH/PBI
+0x50000000 - 0x50100000 1 1 1 SRAM
+0x50100000 - 0x50110000 0 0 0 Control Registers
+0x50110000 - 0x60000000 0 0 0 No access
+0x60000000 - 0x80000000 0 0 0 Un-cached SDRAM Alias
+0x80000000 - 0x9EFF0000 0 0 0 PCI1 MEM32
+0x9EFF0000 - 0x9F000000 0 0 0 PCI1 I/O
+0x9F000000 - 0xA0000000 0 0 0 PCI1 CFG
+0xA0000000 - 0xB0000000 0 0 0 PCI1 PFM1
+0xB0000000 - 0xC0000000 0 0 0 PCI1 PFM2
+0xC0000000 - 0xDEFF0000 0 0 0 PCI2 MEM32
+0xDEFF0000 - 0xDF000000 0 0 0 PCI2 I/O
+0xDF000000 - 0xE0000000 0 0 0 PCI2 CFG
+0xE0000000 - 0xF0000000 0 0 0 PCI2 PFM1
+0xF0000000 - 0xFFFFFFFF 0 0 0 PCI2 PFM2&#13;</PRE
+></TD
+></TR
+></TABLE
+></P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="iq80332.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="redboot-guide.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="iq31244.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>ARM/XScale Intel IQ80332</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="installation-and-testing.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>ARM/Xscale Intel IQ31244</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

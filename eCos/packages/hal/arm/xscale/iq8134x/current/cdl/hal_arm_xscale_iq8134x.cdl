@@ -1,0 +1,569 @@
+# ====================================================================
+#
+#      hal_arm_xscale_iq8134x.cdl
+#
+#      Intel XScale IQ8134X CRB platform HAL package configuration data
+#
+# ====================================================================
+#####ECOSGPLCOPYRIGHTBEGIN####
+## -------------------------------------------
+## This file is part of eCos, the Embedded Configurable Operating System.
+## Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004 Red Hat, Inc.
+##
+## eCos is free software; you can redistribute it and/or modify it under
+## the terms of the GNU General Public License as published by the Free
+## Software Foundation; either version 2 or (at your option) any later version.
+##
+## eCos is distributed in the hope that it will be useful, but WITHOUT ANY
+## WARRANTY; without even the implied warranty of MERCHANTABILITY or
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+## for more details.
+##
+## You should have received a copy of the GNU General Public License along
+## with eCos; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+##
+## As a special exception, if other files instantiate templates or use macros
+## or inline functions from this file, or you compile this file and link it
+## with other works to produce a work based on this file, this file does not
+## by itself cause the resulting work to be covered by the GNU General Public
+## License. However the source code for this file must still be made available
+## in accordance with section (3) of the GNU General Public License.
+##
+## This exception does not invalidate any other reasons why a work based on
+## this file might be covered by the GNU General Public License.
+##
+## Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
+## at http://sources.redhat.com/ecos/ecos-license/
+## -------------------------------------------
+#####ECOSGPLCOPYRIGHTEND####
+# ====================================================================
+######DESCRIPTIONBEGIN####
+#
+# Author(s):      curt.e.bruns@intel.com
+# Contributors:   drew.moseley@intel.com
+# Date:           2004-12-10
+#
+#####DESCRIPTIONEND####
+#
+# ====================================================================
+cdl_package CYGPKG_HAL_ARM_XSCALE_IQ8134X {
+    display       "Intel XScale IQ8134X CRB"
+    parent        CYGPKG_HAL_ARM_XSCALE_IOP34X
+    hardware
+    include_dir   cyg/hal
+    define_header hal_arm_xscale_iq8134x.h
+    description   "
+        This HAL platform package provides
+        support for the Intel XScale IQ8134X CRB."
+
+    compile       iq8134x_misc.c hal_diag.c hal_platform_setup.c iq8134x_setup_mcu.c iq8134x_setup_atu.c iq8134x_cf.c
+
+    implements    CYGINT_HAL_DEBUG_GDB_STUBS
+    implements    CYGINT_HAL_DEBUG_GDB_STUBS_BREAK
+    implements    CYGINT_HAL_VIRTUAL_VECTOR_SUPPORT
+    implements    CYGINT_HAL_ARM_MEM_REAL_REGION_TOP
+    implements    CYGINT_HAL_VIRTUAL_VECTOR_COMM_BAUD_SUPPORT
+
+    requires { CYGNUM_HAL_ARM_XSCALE_IOP_SDRAM_PHYS_BASE == 0x00000000 }
+    requires { CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_PHYS_BASE == 0xF0000000 }
+	requires { CYGPKG_IO_PCI_IO_ALLOCATION_BASE == 0x1000 }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_BAR0_FUNCTION == "NOTHING" }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_BAR1_FUNCTION == "NOTHING" }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_BAR2_FUNCTION == "RAM" }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_BAR3_FUNCTION == "NOTHING" }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_SIZE == 0x80000 }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_SIZE == 0 }
+    requires { CYGNUM_HAL_ARM_XSCALE_IOP_FLASH_SIZE == 0x800000 }
+	requires { CYGNUM_HAL_ARM_XSCALE_IOP_MMRS_PCI_TVR == 0xFFD80000 }
+    requires { CYGNUM_HAL_ARM_XSCALE_IOP_RAM_PCI_TVR == CYGNUM_HAL_ARM_XSCALE_IOP_SDRAM_PHYS_BASE +
+        ((CYGSEM_HAL_ARM_IOP34X_32BIT_ECC_REGION_SIZE * 2) << 20) }
+    
+
+    define_proc {
+        puts $::cdl_system_header "#define CYGBLD_HAL_TARGET_H   <pkgconf/hal_arm.h>"
+        puts $::cdl_system_header "#define CYGBLD_HAL_VARIANT_H  <pkgconf/hal_arm_xscale_iop34x.h>"
+        puts $::cdl_system_header "#define CYGBLD_HAL_PLATFORM_H <pkgconf/hal_arm_xscale_iq8134x.h>"
+        puts $::cdl_header "#define CYGBLD_HAL_PLF_INTS_H <cyg/hal/hal_plf_ints.h>"
+        puts $::cdl_header "#define HAL_PLATFORM_CPU    \"XScale\""
+        puts $::cdl_header "#ifndef __ASSEMBLER__"
+        puts $::cdl_header "extern char *hal_platform_board(void);"
+        puts $::cdl_header "#endif /* __ASSEMBLER__ */"
+        puts $::cdl_header "#define HAL_PLATFORM_BOARD  hal_platform_board()"
+        puts $::cdl_header "#define HAL_PLATFORM_EXTRA  hal_platform_extra()"
+        puts $::cdl_header "#define HAL_PLATFORM_MACHINE_TYPE  hal_platform_machine_type()"
+    }
+
+    cdl_component CYG_HAL_STARTUP {
+        display       "Startup type"
+        flavor        data
+        default_value {"RAM"}
+        legal_values  {"RAM" "ROM" "ROMRAM" "RAMDUAL"}
+        no_define
+        define -file system.h CYG_HAL_STARTUP
+        description   "
+           When targeting the IQ8134X CRB it is possible to build
+           the system for either RAM bootstrap or ROM bootstrap(s). Select
+           'ram' when building programs to load into RAM using onboard
+           debug software such as Angel or eCos GDB stubs.  Select 'rom'
+           when building a stand-alone application which will be put
+           into ROM.  Selection of 'stubs' is for the special case of
+           building the eCos GDB stubs themselves."
+    }
+
+    cdl_component CYG_HAL_STARTUP_EXTRA {
+        display       "Extra startup type string for version reporting"
+        flavor        data
+        default_value {""}
+        description   "
+           Extra string to be included in version reporting"
+    }
+
+    cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_BAUD {
+        display       "Diagnostic serial port baud rate"
+        flavor        data
+        legal_values  9600 19200 38400 57600 115200
+        default_value 115200
+        description   "
+            This option selects the baud rate used for the diagnostic port.
+            Note: this should match the value chosen for the GDB port if the
+            diagnostic and GDB port are the same."
+    }
+
+    cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL_BAUD {
+        display       "GDB serial port baud rate"
+        flavor        data
+        legal_values  9600 19200 38400 57600 115200
+        default_value 115200
+        description   "
+            This option selects the baud rate used for the GDB port."
+    }
+
+    cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS {
+        display      "Number of communication channels on the board"
+        flavor       data
+        calculated    {
+		((CYG_HAL_STARTUP == "ROMRAM") && (CYGHWR_HAL_SDRAM_SPLIT_BASE == 0) && \
+		 (CYGHWR_HAL_APPLICATION_CODE_OFFSET == 0x0)) ? 2 : \
+		((CYG_HAL_STARTUP != "ROMRAM")) ?  2 : 1 }
+        description "
+            IQ8134X provides two on-chip UARTs, but one is reserved if in
+            ROMRAM startup mode."
+    }
+
+    cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL {
+        display          "Debug serial port"
+        active_if        CYGPRI_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL_CONFIGURABLE
+        flavor data
+        legal_values     0 to CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS-1
+        default_value    0
+        description      "
+            This option chooses which port will be used to connect to a host
+            running GDB."
+    }
+
+    cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_DEFAULT {
+        display      "Default console channel."
+        flavor       data
+        legal_values     0 to CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS-1
+        default_value CYGNUM_HAL_VIRTUAL_VECTOR_DEBUG_CHANNEL
+    }
+
+    cdl_option CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL {
+        display          "Diagnostic serial port"
+        active_if        CYGPRI_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_CONFIGURABLE
+        flavor data
+        legal_values     0 to CYGNUM_HAL_VIRTUAL_VECTOR_COMM_CHANNELS-1
+        default_value    CYGNUM_HAL_VIRTUAL_VECTOR_CONSOLE_CHANNEL_DEFAULT
+        description      "
+            This option chooses which port will be used for
+            diagnostic output."
+    }
+
+    cdl_component CYGBLD_GLOBAL_OPTIONS {
+        display "Global build options"
+        flavor  none
+        no_define
+        description   "
+            Global build options including control over
+            compiler flags, linker flags and choice of toolchain."
+
+        parent  CYGPKG_NONE
+
+        cdl_option CYGBLD_GLOBAL_COMMAND_PREFIX {
+            display "Global command prefix"
+            flavor  data
+            no_define
+            default_value { "xscale-elf" }
+            description "
+                This option specifies the command prefix used when
+                invoking the build tools."
+        }
+
+        cdl_option CYGBLD_GLOBAL_CFLAGS {
+            display "Global compiler flags"
+            flavor  data
+            no_define
+            default_value { "-mcpu=xscale -mtune=core3 -Wall -Wpointer-arith -Wstrict-prototypes -Winline -Wundef -Woverloaded-virtual -g -O1 -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -fvtable-gc -finit-priority -mapcs-frame" }
+            description   "
+                This option controls the global compiler flags which are used to
+                compile all packages by default. Individual packages may define
+                options which override these global flags."
+        }
+
+        cdl_option CYGBLD_GLOBAL_LDFLAGS {
+            display "Global linker flags"
+            flavor  data
+            no_define
+            default_value { "-mcpu=xscale -Wl,--gc-sections -Wl,-static -g -O1 -nostdlib -mtune=core3 -Wl,--cref,-Map,$(PREFIX)/bin/redboot.map" }
+            description   "
+                This option controls the global linker flags. Individual
+                packages may define options which override these global flags."
+        }
+
+        cdl_option CYGBLD_BUILD_GDB_STUBS {
+            display "Build GDB stub ROM image"
+            default_value 0
+            requires { (CYG_HAL_STARTUP == "ROM") || (CYG_HAL_STARTUP == "ROMRAM")}
+            requires CYGSEM_HAL_ROM_MONITOR
+            requires CYGBLD_BUILD_COMMON_GDB_STUBS
+            requires CYGDBG_HAL_DEBUG_GDB_INCLUDE_STUBS
+            requires CYGDBG_HAL_DEBUG_GDB_BREAK_SUPPORT
+            requires CYGDBG_HAL_DEBUG_GDB_THREAD_SUPPORT
+            requires ! CYGDBG_HAL_COMMON_INTERRUPTS_SAVE_MINIMUM_CONTEXT
+            requires ! CYGDBG_HAL_COMMON_CONTEXT_SAVE_MINIMUM
+            no_define
+            description "
+                This option enables the building of the GDB stubs for the
+                board. The common HAL controls takes care of most of the
+                build process, but the final conversion from ELF image to
+                binary data is handled by the platform CDL, allowing
+                relocation of the data if necessary."
+
+            make -priority 320 {
+                <PREFIX>/bin/gdb_module.bin : <PREFIX>/bin/gdb_module.img
+                $(OBJCOPY) --remove-section=.fixed_vectors -O binary $< $@
+            }
+        }
+    }
+
+    cdl_component CYGPKG_HAL_ARM_XSCALE_IQ8134X_OPTIONS {
+        display "Intel XScale IQ8134X CRB build options"
+        flavor  none
+        no_define
+        description   "
+            Package specific build options including control over
+            compiler flags used only in building this package,
+            and details of which tests are built."
+
+        cdl_option CYGPKG_HAL_ARM_XSCALE_IQ8134X_CFLAGS_ADD {
+            display "Additional compiler flags"
+            flavor  data
+            no_define
+            default_value { "" }
+            description   "
+                This option modifies the set of compiler flags for
+                building the XScale IQ8134X CRB HAL. These flags are used in addition
+                to the set of global flags."
+        }
+
+        cdl_option CYGPKG_HAL_ARM_XSCALE_IQ8134X_CFLAGS_REMOVE {
+            display "Suppressed compiler flags"
+            flavor  data
+            no_define
+            default_value { "" }
+            description   "
+                This option modifies the set of compiler flags for
+                building the XScale IQ8134X CRB HAL. These flags are removed from
+                the set of global flags if present."
+        }
+
+        cdl_option CYGNUM_HAL_BREAKPOINT_LIST_SIZE {
+            display       "Number of breakpoints supported by the HAL."
+            flavor        data
+            default_value 32
+            description   "
+                This option determines the number of breakpoints supported by the HAL."
+        }
+
+        cdl_option CYGSEM_HAL_ARM_IQ8134X_SETUP_DEBUG {
+            display       "Enable Debug code in setup routines"
+            flavor        bool
+            default_value 0
+            compile debug_platform_setup.c
+            description   "
+                This option controls whether or not the HAL enables Debug routines
+                in the setup code.  This consists of a low-level serial driver and
+                primitive routines."
+        }
+
+
+        cdl_option CYGNUM_HAL_ARM_IQ8134X_FLASH_WIDTH {
+            display       "CRB Flash Width"
+            flavor        data
+            legal_values  8 16
+            default_value 16
+            description   "
+            This option selects the flash bus width."
+        }
+    }
+
+    cdl_component CYGHWR_MEMORY_LAYOUT {
+        display "Memory layout"
+        flavor data
+        no_define
+        calculated { CYG_HAL_STARTUP == "RAM"                ? "arm_xscale_iq8134x_ram" :            \
+                     CYG_HAL_STARTUP == "ROMRAM"             ? "arm_xscale_iq8134x_romram" :         \
+                     CYGSEM_HAL_ARM_XSCALE_USE_CACHE_AS_SRAM ? "arm_xscale_iq8134x_rom_cache_sram" : \
+                                                               "arm_xscale_iq8134x_rom" }
+
+        cdl_option CYGHWR_MEMORY_LAYOUT_LDI {
+            display "Memory layout linker script fragment"
+            flavor data
+            no_define
+            define -file system.h CYGHWR_MEMORY_LAYOUT_LDI
+            calculated {                                                                                          \
+					CYG_HAL_STARTUP == "RAM"                ?	"<pkgconf/mlt_arm_xscale_iq8134x_ram.ldi>" :            \
+					CYG_HAL_STARTUP == "ROMRAM"             ?	"<pkgconf/mlt_arm_xscale_iq8134x_romram.ldi>" :         \
+					CYGSEM_HAL_ARM_XSCALE_USE_CACHE_AS_SRAM ?	"<pkgconf/mlt_arm_xscale_iq8134x_rom_cache_sram.ldi>" : \
+														"<pkgconf/mlt_arm_xscale_iq8134x_rom.ldi>" }
+        }
+
+        cdl_option CYGHWR_MEMORY_LAYOUT_H {
+            display "Memory layout header file"
+            flavor data
+            no_define
+            define -file system.h CYGHWR_MEMORY_LAYOUT_H
+            calculated {                                                                                        \
+                CYG_HAL_STARTUP == "RAM"                ? "<pkgconf/mlt_arm_xscale_iq8134x_ram.h>" :            \
+                CYG_HAL_STARTUP == "ROMRAM"             ? "<pkgconf/mlt_arm_xscale_iq8134x_romram.h>" :         \
+                CYGSEM_HAL_ARM_XSCALE_USE_CACHE_AS_SRAM ? "<pkgconf/mlt_arm_xscale_iq8134x_rom_cache_sram.h>" : \
+                                                          "<pkgconf/mlt_arm_xscale_iq8134x_rom.h>" }
+        }
+    }
+
+    cdl_option CYGSEM_HAL_ROM_MONITOR {
+        display       "Behave as a ROM monitor"
+        flavor        bool
+        default_value 0
+        parent        CYGPKG_HAL_ROM_MONITOR
+        requires      { (CYG_HAL_STARTUP == "ROM") || (CYG_HAL_STARTUP == "ROMRAM") || (CYG_HAL_STARTUP == "RAMDUAL") }
+        description   "
+            Enable this option if this program is to be used as a ROM monitor,
+            i.e. applications will be loaded into RAM on the board, and this
+            ROM monitor may process exceptions or interrupts generated from the
+            application. This enables features such as utilizing a separate
+            interrupt stack when exceptions are generated."
+    }
+
+    cdl_option CYGSEM_HAL_USE_ROM_MONITOR {
+         display       "Work with a ROM monitor"
+         flavor        booldata
+         legal_values  { "Generic" "GDB_stubs" }
+         default_value { CYG_HAL_STARTUP == "RAM" ? "GDB_stubs" : 0 }
+         parent        CYGPKG_HAL_ROM_MONITOR
+         requires      { CYG_HAL_STARTUP == "RAM" }
+         description   "
+             Support can be enabled for different varieties of ROM monitor.
+             This support changes various eCos semantics such as the encoding
+             of diagnostic output, or the overriding of hardware interrupt
+             vectors.
+             Firstly there is \"Generic\" support which prevents the HAL
+             from overriding the hardware vectors that it does not use, to
+             instead allow an installed ROM monitor to handle them. This is
+             the most basic support which is likely to be common to most
+             implementations of ROM monitor.
+             \"GDB_stubs\" provides support when GDB stubs are included in
+             the ROM monitor or boot ROM."
+     }
+
+    cdl_component CYGPKG_REDBOOT_HAL_OPTIONS {
+        display       "Redboot HAL options"
+        flavor        none
+        no_define
+        parent        CYGPKG_REDBOOT
+        active_if     CYGPKG_REDBOOT
+        description   "
+            This option lists the target's requirements for a valid Redboot
+            configuration."
+
+        # compile -library=libextras.a redboot_cmds.c
+
+        cdl_option CYGBLD_BUILD_REDBOOT_BIN {
+            display       "Build Redboot ROM binary image"
+            active_if     CYGBLD_BUILD_REDBOOT
+            default_value 1
+            no_define
+            description "This option enables the conversion of the Redboot ELF
+                         image to a binary image suitable for ROM programming."
+
+            compile -library=libextras.a diag/diag.c diag/io_utils.c \
+                                diag/xscale_test.c  \
+                                diag/memtest.c diag/test_menu.c diag/i82545.c diag/smsc.c \
+                                diag/pcitest.c diag/battery.c diag/timer.c diag/cftest.c
+
+            make -priority 325 {
+                <PREFIX>/bin/redboot.bin : <PREFIX>/bin/redboot.elf
+                $(OBJCOPY) --strip-debug $< $(@:.bin=.img)
+                $(OBJCOPY) -O srec $< $(@:.bin=.srec)
+                $(OBJCOPY) -O binary $< $@
+            }
+        }
+
+        cdl_option CYGBLD_BUILD_REDBOOT_XDB_DEBUG_INFO {
+            display       "Build Redboot Debug info for XDB source level debugging"
+            active_if     CYGBLD_BUILD_REDBOOT
+            default_value 0
+            no_define
+            description "This option enables the conversion of the Redboot ELF
+                         debug information to DB format for the XDB debugger."
+
+	        make -priority 325 {
+                <PREFIX>/bin/redboot.bd : <PREFIX>/bin/redboot.elf
+				dwarf2bd.exe -sd "\cygdrive\c=C:" -afs -hx ../../../../../install/bin/redboot.elf ../../../../../install/bin/redboot.bd
+			}
+        }
+
+        cdl_option CYGSEM_HAL_ARM_IQ8134X_BATTERY_TEST {
+            display       "Include Battery Test in Diagnostics Menu"
+            flavor        bool
+            default_value 0
+            description   "
+                This option controls whether or not the battery test is included
+                in the IQ8134X CRB diagnostics."
+        }
+
+        cdl_option CYGSEM_HAL_ARM_IQ8134X_USE_IMU {
+            display       "Ring firmware progress doorbells to other core"
+            active_if { CYG_HAL_STARTUP == "ROMRAM" }
+            flavor        bool
+            default_value 0
+            description   "
+                This option controls whether or not the
+                boot doorbell registers are used for communication with the
+                transport core."
+       }
+
+        cdl_option CYGSEM_HAL_ARM_IQ8134X_USE_PCE1        {
+            display       "Use Peripherals on PCE1: LED, Rotary switch, etc"
+            flavor        bool
+            default_value 1
+            description   "
+                This option controls whether or not the HAL reads/writes to any
+                peripheral on PCE1.  Setting to 0 will disable LED output and
+                reading the rotary switch.  Useful for porting to different
+                platforms that don't have these peripherals."
+        }
+
+        cdl_option CYGSEM_HAL_ARM_IQ8134X_HARDCODE_MCU    {
+            display       "No SPD scan.  MCU values will be hardcoded.     "
+            flavor        bool
+            default_value 0
+            description   "
+                This option controls whether or not the HAL reads the SPD on the
+                DDR I2C bus to determine the MCU settings.  If set to 1, the
+                values for the MCU will be hardcoded and will need to be changed
+                for any change in DIMM."
+        }
+
+        cdl_option CYGSEM_HAL_ARM_IQ8134X_SLE_ENVIRONMENT {
+            display       "Emulation environment.  Some inits not run.     "
+            flavor        bool
+            default_value 0
+            description   "
+                This option controls whether or not RedBoot is running on the
+                emulation platform.  If so, some init fcns will not run."
+        }
+
+        cdl_option CYGHWR_HAL_SDRAM_SPLIT_BASE        {
+            display       "Start of SDRAM split between the Master and Slave Processor"
+            active_if { CYG_HAL_STARTUP == "ROMRAM" }
+            flavor        data
+            legal_values  0 0x04000000 0x08000000 0x10000000 0x20000000 0x40000000
+            default_value 0x08000000
+            description   "
+            When running a Two Core RedBoot, the Master and Slave processor split SDRAM
+            memory in half.  The SplitSize is the amount of memory installed in the board
+            divided by two, which allows us to determine where the image is loaded into RAM
+            so we can set the VADDR address to get the RESET instruction correctly."
+        }
+
+        cdl_option CYGHWR_HAL_APPLICATION_CODE_OFFSET {
+            display       "Physical Address in Flash where RedBoot is remapped."
+            active_if { CYG_HAL_STARTUP == "ROMRAM" }
+            flavor        data
+            legal_values  0x200000 0x400000 0x0
+            default_value 0x200000
+			requires { (CYGNUM_REDBOOT_FLASH_RESERVED_BASE == \
+					  (CYGHWR_HAL_APPLICATION_CODE_OFFSET)) }
+            description   "
+            With ROMRAM Version, the transport firmware will jump to us at a
+            particular physical offset.  It is supposed to be 2M from the base of remapped
+            Flash, but for debug firmware images, it is 4M.
+            For ROMRAM versions that have no transport firmware, the physical address of
+            Flash will be 0xF0000000 and that should be the chosen setting for this option."
+        }
+
+        cdl_option CYGHWR_HAL_ROM_VADDR {
+            display       "Offset in Flash from which we start execution"
+            active_if { CYG_HAL_STARTUP == "ROMRAM" || CYG_HAL_STARTUP == "RAMDUAL" }
+            flavor        data
+            legal_values  0x0FE00000 0x0FC00000	0xF8000000 0xF0000000 0xE0000000 0
+		    default_value { CYG_HAL_STARTUP == "ROMRAM" ?  \
+                              (CYGHWR_HAL_APPLICATION_CODE_OFFSET != 0) ? \
+                                  (((CYGHWR_HAL_APPLICATION_CODE_OFFSET + 0xF0000000) * -1) & 0xFFFFFFFF) \
+							      : 0 \
+                            : (((CYGHWR_HAL_SDRAM_SPLIT_BASE) * -1) & 0xFFFFFFFF) }
+            description   "
+            With ROMRAM Version with common bootcode, our exception handlers start at
+            0xF020.0000. This option is neccessary for the initial reset vector to load the
+            PC with the correct offset to the reset_vector.   This option is automatically
+            calculated based on either ROMRAM/APPLICATION_CODE_OFFSET setting."
+        }
+
+       cdl_option CYGSEM_HAL_SCRUB_SRAM {
+            display       "Does the core need to scrub SRAM"
+            active_if { CYG_HAL_STARTUP != "ROMRAM" }
+            flavor        bool
+            default_value 1
+            description   "
+            SRAM must be scrubbed before accessed since ECC cannot be turned off.  This
+			only pertains to the non ROMRAM versions of RedBoot."
+        }
+
+		cdl_option CYGSEM_HAL_ARM_IQ8134x_USE_ADMA_SCRUB {
+            display       "Use ADMA engine to scrub SDRAM"
+            flavor        bool
+            default_value 1
+            description   "
+            SDRAM scrub has hisorically been done with just core writes.  This option
+			enables the high performance DMA engine to scrub SDRAM."
+        }
+
+		cdl_option CYGSEM_HAL_ARM_IQ8134x_DISABLE_L1     {
+            display       "Disable L1 until Cache parity issue fixed"
+            flavor        bool
+            default_value 0
+            description   "
+            Disable L1 ICache and DCache after RedBoot initialized.  Behavior of L1
+			is required for proper booting, but can be disabled once booted."
+        }
+
+               cdl_option CYGSEM_HAL_ARM_BOARD_YORK_CREEK     {
+            display       "Target Board is York Creek"
+            flavor        bool
+            default_value 0
+            description   "
+            Support York Creek CRB."
+        }
+
+
+        cdl_option CYGNUM_HAL_NUM_SLOTS {
+            display       "Number of PCI-X slots on the board"
+            flavor        data
+            default_value 1
+            description   "This number is used in the PCI Mode calculations to determine
+		the fasted mode that the bus can run at"
+        }
+    }
+}

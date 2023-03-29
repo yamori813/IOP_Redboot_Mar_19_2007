@@ -1,0 +1,4 @@
+cdl_option CYGSEM_HAL_ARM_BOARD_YORK_CREEK {
+    user_value 1
+}
+
