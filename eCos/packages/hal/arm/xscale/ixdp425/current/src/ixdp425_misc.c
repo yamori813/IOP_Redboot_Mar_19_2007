@@ -245,6 +245,7 @@ eeprom_getb(int more)
 static int
 eeprom_read(int addr, cyg_uint8 *buf, int nbytes)
 {
+#if 0
     cyg_uint8 start_byte;
     int i;
 
@@ -282,6 +283,15 @@ eeprom_read(int addr, cyg_uint8 *buf, int nbytes)
     eeprom_stop();
 
     return nbytes;
+#else
+    buf[0] = 0x00;
+    buf[1] = 0x01;
+    buf[2] = 0x69;
+    buf[3] = 0xbc;
+    buf[4] = 0x00;
+    buf[5] = addr;
+    return 6;
+#endif
 }
 
 static void
