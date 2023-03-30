@@ -63,7 +63,7 @@
 #define SDRAM_PHYS_BASE                    0x00000000
 #define SDRAM_BASE                         0x00000000
 #define SDRAM_UNCACHED_BASE                0x10000000
-#define SDRAM_SIZE                         0x10000000  // 256MB
+#define SDRAM_SIZE                         0x04000000  // 64MB
 
 #define IXDP425_LED_DATA                   REG16(0, 0x52000000)
 
