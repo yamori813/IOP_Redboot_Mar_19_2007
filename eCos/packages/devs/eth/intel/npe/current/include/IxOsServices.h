@@ -42,7 +42,7 @@
 #include <vxWorks.h>
 #include <semLib.h>
 
-#elif defined(__linux)
+#elif defined(__linux_a)
 #include <linux/types.h>
 #include <asm/semaphore.h>
 #elif defined(__ECOS)
@@ -87,7 +87,8 @@
  * @{
  */
 
-#if CPU!=SIMSPARCSOLARIS
+//#if CPU!=SIMSPARCSOLARIS
+#if 0
 #ifndef __ECOS
 #define IXP425_USE_FAST_MUTEX
 #endif
@@ -102,7 +103,7 @@ typedef int IX_IRQ_STATUS;
           
 typedef SEM_ID IxMutex;
  
-#elif defined(__linux)
+#elif defined(__linux_a)
 typedef struct semaphore *IxMutex;
 #elif defined(__ECOS)
 typedef cyg_drv_mutex_t IxMutex;
@@ -127,7 +128,7 @@ typedef int IxFastMutex;
 
 #endif
 
-#elif defined(__linux)
+#elif defined(__linux_a)
 #ifdef IXP425_USE_FAST_MUTEX
 typedef int IxFastMutex;
 #else

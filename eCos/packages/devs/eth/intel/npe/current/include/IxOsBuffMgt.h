@@ -131,7 +131,7 @@
  */
 #if defined __vxworks
 #define IX_MBUF_NET_POOL(m_blk_ptr)		   (m_blk_ptr)->pClBlk->pNetPool
-#elif defined __linux
+#elif defined __linux_a
 #define IX_MBUF_NET_POOL(m_blk_ptr)		   (m_blk_ptr)->m_net_pool
 #elif defined __ECOS
 #define IX_MBUF_NET_POOL(m_blk_ptr)		   (m_blk_ptr)->mBlkPktHdr.m_net_pool

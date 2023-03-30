@@ -188,7 +188,7 @@
  */
 #define IX_ACC_DRV_DMA_FREE(ptr,size)  cacheDmaFree(ptr)
 
-#elif defined(__linux)
+#elif defined(__linux_a)
 
 #include <stdlib.h>
 

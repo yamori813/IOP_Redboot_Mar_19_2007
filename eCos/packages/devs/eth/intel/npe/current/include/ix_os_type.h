@@ -63,7 +63,7 @@ extern "C"
 #define _IX_OS_ECOS_        4   /* eCos OS */
 
 #if !defined(_IX_OS_TYPE_)
-#   if defined(__linux)
+#   if defined(__linux_a)
 #       define _IX_OS_TYPE_ _IX_OS_LINUX_
 #   elif defined(__vxworks)
 #       define _IX_OS_TYPE_ _IX_OS_VXWORKS_

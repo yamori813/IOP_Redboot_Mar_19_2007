@@ -303,7 +303,7 @@ typedef enum ix_e_ossl_thread_priority
  *
  */
 #define IX_OSSL_ERROR_SUCCESS     (ix_error)0UL 
-#ifdef __linux
+#ifdef __linux_a
 #define IX_OSSL_ERROR_FAILURE 	  (ix_error)1
 #endif
 

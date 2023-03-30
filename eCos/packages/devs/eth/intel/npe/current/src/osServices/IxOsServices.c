@@ -49,7 +49,7 @@
 
 #define VX_OSS_RETCODE(retCode) (((retCode) == OK) ? IX_SUCCESS : IX_FAIL)
 
-#elif defined(__linux)
+#elif defined(__linux_a)
 #include <asm/hardirq.h>
 #include <asm/system.h>
 #include <asm/arch/irqs.h>
@@ -96,7 +96,7 @@ static int logLevel = LOG_MESSAGE; /* by default trace everyting but debug messa
  *
  * @{
  */
-#if defined(__linux)
+#if defined(__linux_a)
 typedef struct isr_info_t
 {
     void (*routine)(void *);
@@ -128,7 +128,7 @@ ixOsServIntBind(int vector, void (*routine)(void *), void *parameter)
     
     return VX_OSS_RETCODE(intEnable(IVEC_TO_INUM(vector)));
 #endif
-#elif defined(__linux)
+#elif defined(__linux_a)
     if (isr_info[vector].routine)
 	return IX_FAIL;
     
@@ -154,7 +154,7 @@ ixOsServIntUnbind(int vector)
 {
 #ifdef __vxworks
     return IX_FAIL;
-#elif defined(__linux)
+#elif defined(__linux_a)
     if (!isr_info[vector].routine)
 	return IX_FAIL;
     
@@ -181,7 +181,7 @@ ixOsServIntLock()
     return intLock();
 #endif
     
-#elif defined(__linux)    
+#elif defined(__linux_a)    
     int flags;
     save_flags(flags);
     cli();
@@ -206,7 +206,7 @@ ixOsServIntUnlock(int lockKey)
     intUnlock(lockKey);
 #endif
     
-#elif defined (__linux)
+#elif defined (__linux_a)
     restore_flags(lockKey);
 #elif defined(__ECOS)
     HAL_RESTORE_INTERRUPTS(lockKey)
@@ -224,7 +224,7 @@ ixOsServIntLevelSet(int level)
     return intLevelSet(level);
 #endif
     
-#elif defined(__linux)
+#elif defined(__linux_a)
     return IX_FAIL;   
 #else
     
@@ -242,7 +242,7 @@ ixOsServMutexInit(IxMutex *mutex)
 
     return *mutex != NULL ? IX_SUCCESS : IX_FAIL;
 
-#elif defined(__linux)
+#elif defined(__linux_a)
     *mutex = (struct semaphore *)kmalloc(sizeof(struct semaphore), GFP_KERNEL);
     if (!mutex)
 	return IX_FAIL;
@@ -266,7 +266,7 @@ ixOsServMutexLock(IxMutex *mutex)
   
     return VX_OSS_RETCODE(semTake(*mutex, WAIT_FOREVER));
     
-#elif defined(__linux)
+#elif defined(__linux_a)
     if (in_irq())
 	BUG();
     down(*mutex);
@@ -289,7 +289,7 @@ ixOsServMutexUnlock(IxMutex *mutex)
   
     return VX_OSS_RETCODE(semGive(*mutex));
     
-#elif defined(__linux)
+#elif defined(__linux_a)
     up(*mutex);
     return IX_SUCCESS;
 #elif defined(__ECOS)
@@ -309,7 +309,7 @@ ixOsServMutexDestroy(IxMutex *mutex)
   
     return VX_OSS_RETCODE(semDelete(*mutex));
     
-#elif defined(__linux)    
+#elif defined(__linux_a)    
     kfree(*mutex);
     return IX_SUCCESS;
 #elif defined(__ECOS)
@@ -346,7 +346,7 @@ ixOsServFastMutexInit(IxFastMutex *mutex)
     
 #endif
       
-#elif defined(__linux)    
+#elif defined(__linux_a)    
 #ifdef IXP425_USE_FAST_MUTEX
     return mutex ? *mutex = 0, IX_SUCCESS : IX_FAIL;
 #else
@@ -370,7 +370,7 @@ ixOsServFastMutexTryLock(IxMutex *mutex)
 
     return VX_OSS_RETCODE(semTake(*mutex, NO_WAIT));
   
-#elif defined(__linux)
+#elif defined(__linux_a)
     return !down_trylock(*mutex) ? IX_SUCCESS : IX_FAIL;
 #else
     
@@ -378,7 +378,7 @@ ixOsServFastMutexTryLock(IxMutex *mutex)
     
 #endif
 }
-#elif defined(__linux)
+#elif defined(__linux_a)
 
 asm("	.align	5 \
 	.globl	ixOsServFastMutexTryLock \
@@ -421,7 +421,7 @@ ixOsServFastMutexUnlock(IxFastMutex *mutex)
 
 #endif
         
-#elif defined(__linux)
+#elif defined(__linux_a)
 #ifdef IXP425_USE_FAST_MUTEX
     return mutex ? *mutex = 0, IX_SUCCESS : IX_FAIL;
 #else
@@ -438,7 +438,7 @@ ixOsServFastMutexUnlock(IxFastMutex *mutex)
 
 #ifndef __vxworks
 
-#ifdef __linux
+#ifdef __linux_a
 #define logMsg printk
 #else
 #ifdef __ECOS
@@ -506,7 +506,7 @@ ixOsServSleep(int microseconds)
         lastTimestamp = currentTimestamp;
     }
     
-#elif defined(__linux)
+#elif defined(__linux_a)
     if(microseconds>2000)
     {
 	printk(KERN_WARNING "udelay for %d>2000! delay aborted!!\n",
@@ -527,7 +527,7 @@ ixOsServSleep(int microseconds)
 #endif
 }
 
-#if !defined(__vxworks) && !defined(__linux) && !defined(__ECOS)
+#if !defined(__vxworks) && !defined(__linux_a) && !defined(__ECOS)
 #include <errno.h>
 #include <string.h>
 #include <poll.h>
@@ -545,7 +545,7 @@ ixOsServTaskSleep(int milliseconds)
   
     taskDelay(delay);
     
-#elif defined(__linux)
+#elif defined(__linux_a)
     if ( milliseconds != 0 )
 	{
 	    current->state = TASK_INTERRUPTIBLE;
@@ -583,7 +583,7 @@ ixOsServTimestampGet()
 
 #endif
 
-#elif defined(__linux)
+#elif defined(__linux_a)
 
     return REG_GET(IXP425_OSTS);
 

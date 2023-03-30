@@ -148,7 +148,7 @@ typedef struct os_s_error{
 #define OS_WAIT_FOREVER WAIT_FOREVER
 #define OS_WAIT_NONE	NO_WAIT 
 
-#elif __linux
+#elif __linux_a
 
 #include <linux/types.h>
 #include <asm/semaphore.h>
